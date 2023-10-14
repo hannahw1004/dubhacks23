@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Form, Input, Typography } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import google from "./google.svg";
 import { signUp, logInGoogle } from "./firebase";
@@ -62,11 +62,14 @@ export const SignUp: React.FC = () => {
     }
   };
 
+  const navigate = useNavigate();
+
   const onFinish = async (values: any) => {
     console.log("Success:", values);
     const status = await signUp(values);
     console.log(status);
     openNotification(status.success, status.message);
+    navigate('/createprofile');
   };
 
   const onLogInGoogle = async () => {
