@@ -1,11 +1,12 @@
-import React from "react";
-import { Button, Form, Input } from "antd";
+import React, { useState } from "react";
+import { Button, Form, Input, Typography } from "antd";
+import { Link, useNavigate } from "react-router-dom";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import google from "./google.svg";
 import { signUp, logInGoogle } from "./firebase";
 import { notification } from 'antd';
 
-//signUp(onFinish)
+const { Title } = Typography;
 
 const onFinishFailed = (errorInfo: any) => {
   console.log("Failed:", errorInfo);
@@ -61,11 +62,14 @@ export const SignUp: React.FC = () => {
     }
   };
 
+  const navigate = useNavigate();
+
   const onFinish = async (values: any) => {
     console.log("Success:", values);
     const status = await signUp(values);
     console.log(status);
     openNotification(status.success, status.message);
+    navigate('/createprofile');
   };
 
   const onLogInGoogle = async () => {
@@ -75,6 +79,7 @@ export const SignUp: React.FC = () => {
   return (
     <div className="centered-wrapper">
       {contextHolder}
+      <Title level={2} style={{marginBottom: "1em"}}>Register</Title>
       <Form
         onFinish={onFinish}
         name="basic"
@@ -90,7 +95,7 @@ export const SignUp: React.FC = () => {
           label="Email"
           name="username"
           rules={[
-            { required: true, message: "Please input your Email!" },
+            { required: true, message: "Please enter your email" },
             () => ({
               validator(_, value) {
                 if (value.length === 0 || emailRegex.test(value)) {
@@ -113,7 +118,7 @@ export const SignUp: React.FC = () => {
         <Form.Item<FieldType>
           label="Password"
           name="password"
-          rules={[{ required: true, message: "Please input your password!" }]}
+          rules={[{ required: true, message: "Please enter a password" }]}
         >
           <Input.Password
             size="large"
@@ -131,7 +136,7 @@ export const SignUp: React.FC = () => {
           rules={[
             {
               required: true,
-              message: "Please confirm your password!",
+              message: "Please confirm the password",
             },
             ({ getFieldValue }) => ({
               validator(_, value) {
@@ -139,7 +144,7 @@ export const SignUp: React.FC = () => {
                   return Promise.resolve();
                 }
                 return Promise.reject(
-                  new Error("The new password that you entered do not match!")
+                  new Error("Passwords entered do not match")
                 );
               },
             }),
@@ -178,6 +183,9 @@ export const SignUp: React.FC = () => {
             />
             Register with Google
           </Button>
+        </Form.Item>
+        <Form.Item {...tailFormItemLayout}>
+          Already have an account? <Link to="/login">Log in here</Link>!
         </Form.Item>
       </Form>
     </div>
