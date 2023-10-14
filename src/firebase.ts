@@ -19,32 +19,30 @@ export const firebaseConfig = {
   measurementId: "G-M76ZB6P701",
 };
 
-const auth = getAuth();
-createUserWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    // Signed up 
-    const user = userCredential.user;
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // ..
-  });
-
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 
-export const signUp = (form: any) => {
-    createUserWithEmailAndPassword(auth, form.username, form.password)
+type status = {
+  success: boolean,
+  message: string
+}
+
+export const signUp = async (form: any): Promise<status> => {
+    return createUserWithEmailAndPassword(auth, form.username, form.password)
     .then((userCredential) => {
         const user = userCredential.user;
-        console.log("Success");
+        return {
+          success: true,
+          message: "User has been created successfully!"
+        }
     })
     .catch((error) => {
         const errorCode = error.code; 
         const errorMessage = error.message;
-        console.log("Failed");
-    })
+        return {
+          success: false,
+          message: errorMessage
+        }
+    });
 };
