@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, Typography } from "antd";
+import { Link } from "react-router-dom";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import google from "./google.svg";
 import { signUp, logInGoogle } from "./firebase";
 import { notification } from 'antd';
 
-//signUp(onFinish)
+const { Title } = Typography;
 
 const onFinishFailed = (errorInfo: any) => {
   console.log("Failed:", errorInfo);
@@ -75,6 +76,7 @@ export const SignUp: React.FC = () => {
   return (
     <div className="centered-wrapper">
       {contextHolder}
+      <Title level={2} style={{marginBottom: "1em"}}>Register</Title>
       <Form
         onFinish={onFinish}
         name="basic"
@@ -178,6 +180,9 @@ export const SignUp: React.FC = () => {
             />
             Register with Google
           </Button>
+        </Form.Item>
+        <Form.Item {...tailFormItemLayout}>
+          Already have an account? <Link to="/">Log in here</Link>!
         </Form.Item>
       </Form>
     </div>
