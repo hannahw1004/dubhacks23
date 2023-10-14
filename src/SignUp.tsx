@@ -95,7 +95,7 @@ export const SignUp: React.FC = () => {
           label="Email"
           name="username"
           rules={[
-            { required: true, message: "Please input your Email!" },
+            { required: true, message: "Please enter your email" },
             () => ({
               validator(_, value) {
                 if (value.length === 0 || emailRegex.test(value)) {
@@ -118,7 +118,7 @@ export const SignUp: React.FC = () => {
         <Form.Item<FieldType>
           label="Password"
           name="password"
-          rules={[{ required: true, message: "Please input your password!" }]}
+          rules={[{ required: true, message: "Please enter a password" }]}
         >
           <Input.Password
             size="large"
@@ -136,7 +136,7 @@ export const SignUp: React.FC = () => {
           rules={[
             {
               required: true,
-              message: "Please confirm your password!",
+              message: "Please confirm the password",
             },
             ({ getFieldValue }) => ({
               validator(_, value) {
@@ -144,7 +144,7 @@ export const SignUp: React.FC = () => {
                   return Promise.resolve();
                 }
                 return Promise.reject(
-                  new Error("The new password that you entered do not match!")
+                  new Error("Passwords entered do not match")
                 );
               },
             }),

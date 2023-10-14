@@ -26,7 +26,7 @@ const CreateProfile: React.FC = () => {
         autoComplete="off"
         >
 
-            <Form.Item label="Name" name="name" rules={[{ required: true, message: 'Please enter your name!' }]}>
+            <Form.Item label="Name" name="name" rules={[{ required: true, message: 'Please enter your name' }]}>
                 <Input />
             </Form.Item>
 

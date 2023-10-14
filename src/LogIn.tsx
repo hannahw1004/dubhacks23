@@ -40,7 +40,7 @@ export const Login: React.FC = () => (
       <Form.Item<FieldType>
         label="Email"
         name="username"
-        rules={[{ required: true, message: "Please input your Email!" }]}
+        rules={[{ required: true, message: "Please enter your email" }]}
       >
         <Input
           size="large"
@@ -52,7 +52,7 @@ export const Login: React.FC = () => (
       <Form.Item<FieldType>
         label="Password"
         name="password"
-        rules={[{ required: true, message: "Please input your password!" }]}
+        rules={[{ required: true, message: "Please enter your password" }]}
       >
         <Input.Password
           size="large"
@@ -93,7 +93,7 @@ export const Login: React.FC = () => (
           Forgot password?
         </a>
         <br />
-        Or <Link to="/SignUp">register now!</Link>
+        Or <Link to="/signup">register now!</Link>
       </Form.Item>
     </Form>
   </div>
