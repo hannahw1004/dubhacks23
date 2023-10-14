@@ -64,17 +64,13 @@ export const SignUp: React.FC = () => {
         >
             
 
-            <Form.Item<FieldType>
-                 label="Email"
-                 rules={[
-                     {
-                     required: true,
-                     message: 'Please input your email!',
-                     },
-                 ]}
-                 name="username">
-                    <Input/>
-            </Form.Item>
+        <Form.Item<FieldType>
+            label="Password"
+            name="password"
+            rules={[{ required: true, message: 'Please input your password!' }]}
+        >
+        <Input.Password />
+        </Form.Item>
 
                 <Input
                     size="large"
