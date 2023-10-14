@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from "react-router-dom"
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
+import google from "./google.svg";
 
 const onFinish = (values: any) => {
     console.log('Success:', values);
@@ -64,6 +65,10 @@ export const Login: React.FC = () => (
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <Button type="primary" htmlType="submit" className="login-form-button">
                 Log In
+            </Button>
+            <Button type="default" htmlType="submit" className="login-form-button">
+                <img src={google} alt="Google" style={{height: "1em", width: "1em", marginRight: "0.5em"}}/>
+                Log In with Google
             </Button>
             Or <Link to="/SignUp">register now!</Link>
         </Form.Item>
