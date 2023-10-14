@@ -1,82 +1,99 @@
-import React from 'react';
-import {Link} from "react-router-dom"
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input } from 'antd';
+import React from "react";
+import { Link } from "react-router-dom";
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Checkbox, Form, Input } from "antd";
 import google from "./google.svg";
 
 const onFinish = (values: any) => {
-    console.log('Success:', values);
+  console.log("Success:", values);
 };
 
 const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
+  console.log("Failed:", errorInfo);
+};
+
+const tailLayout = {
+  wrapperCol: { offset: 4, span: 16 },
 };
 
 type FieldType = {
-    username?: string;
-    password?: string;
-    remember?: string;
+  username?: string;
+  password?: string;
+  remember?: string;
 };
 
 export const Login: React.FC = () => (
-    <div className ="centered-wrapper">
-        <Form
-        name="basic"
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 16 }}
-        style={{ maxWidth: 600 }}
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        autoComplete="off"
+  <div className="centered-wrapper">
+    <Form
+      name="basic"
+      labelCol={{ span: 4 }}
+      wrapperCol={{ span: 16 }}
+      style={{ width: "500px" }}
+      initialValues={{ remember: true }}
+      onFinish={onFinish}
+      onFinishFailed={onFinishFailed}
+      autoComplete="off"
     >
-        <Form.Item<FieldType>
-            label="Email"
-            name="username"
-            rules={[{ required: true, message: 'Please input your Email!' }]}
+      <Form.Item<FieldType>
+        label="Email"
+        name="username"
+        rules={[{ required: true, message: "Please input your Email!" }]}
+      >
+        <Input
+          size="large"
+          prefix={<UserOutlined className="site-form-item-icon" />}
+          placeholder="Email"
+        />
+      </Form.Item>
+
+      <Form.Item<FieldType>
+        label="Password"
+        name="password"
+        rules={[{ required: true, message: "Please input your password!" }]}
+      >
+        <Input.Password
+          size="large"
+          prefix={<LockOutlined className="site-form-item-icon" />}
+          type="password"
+          placeholder="Password"
+        />
+      </Form.Item>
+
+      <Form.Item<FieldType>
+        name="remember"
+        valuePropName="checked"
+        wrapperCol={{ offset: 4, span: 16 }}
+      >
+        <Checkbox>Remember me</Checkbox>
+      </Form.Item>
+
+      <Form.Item {...tailLayout}>
+        <Button
+          type="primary"
+          htmlType="submit"
+          className="login-form-button"
+          style={{ marginRight: "1em" }}
         >
-            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email"/>
-        </Form.Item>
-
-        <Form.Item<FieldType>
-            label="Password"
-            name="password"
-            rules={[{ required: true, message: 'Please input your password!' }]}
-        >
-            <Input.Password 
-                prefix={<LockOutlined className="site-form-item-icon" />}
-                type="password"
-                placeholder="Password"
-            />
-        </Form.Item>
-
-        <Form.Item<FieldType>
-            name="remember"
-            valuePropName="checked" 
-            noStyle
-        >
-            <Checkbox>Remember me</Checkbox>
-
-            <a className="login-form-forgot" href="">
-                Forgot password
-            </a>
-        </Form.Item>
-
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button type="primary" htmlType="submit" className="login-form-button">
-                Log In
-            </Button>
-            <Button type="default" htmlType="submit" className="login-form-button">
-                <img src={google} alt="Google" style={{height: "1em", width: "1em", marginRight: "0.5em"}}/>
-                Log In with Google
-            </Button>
-            Or <Link to="/SignUp">register now!</Link>
-        </Form.Item>
+          Log In
+        </Button>
+        <Button type="default" htmlType="submit" className="login-form-button">
+          <img
+            src={google}
+            alt="Google"
+            style={{ height: "1em", width: "1em", marginRight: "0.5em", verticalAlign: "middle" }}
+          />
+          Log In with Google
+        </Button>
+      </Form.Item>
+      <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
+        <a className="login-form-forgot" href="">
+          Forgot password?
+        </a>
+        <br />
+        Or <Link to="/SignUp">register now!</Link>
+      </Form.Item>
     </Form>
-    </div>
-    
+  </div>
 );
 
 export default Login;
-
-
