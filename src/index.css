@@ -23,5 +23,6 @@ code {
   justify-content: center;
   float: right;
   float: left;
+  flex-direction: column;
 }
 

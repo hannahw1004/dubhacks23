@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Checkbox, Form, Input, Typography } from "antd";
 import google from "./google.svg";
+
+const { Title } = Typography;
 
 const onFinish = (values: any) => {
   console.log("Success:", values);
@@ -24,6 +26,7 @@ type FieldType = {
 
 export const Login: React.FC = () => (
   <div className="centered-wrapper">
+    <Title level={2} style={{marginBottom: "1em"}}>Log In</Title>
     <Form
       name="basic"
       labelCol={{ span: 4 }}
