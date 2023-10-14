@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, Input } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import google from "./google.svg";
-import { signUp } from "./firebase";
-import type { NotificationPlacement } from 'antd/es/notification/interface';
+import { signUp, logInGoogle } from "./firebase";
 import { notification } from 'antd';
 
 //signUp(onFinish)
@@ -68,6 +67,11 @@ export const SignUp: React.FC = () => {
     console.log(status);
     openNotification(status.success, status.message);
   };
+
+  const onLogInGoogle = async () => {
+    const status = await logInGoogle();
+    openNotification(status.success, status.message);
+  }
   return (
     <div className="centered-wrapper">
       {contextHolder}
@@ -159,8 +163,8 @@ export const SignUp: React.FC = () => {
           </Button>
           <Button
             type="default"
-            htmlType="submit"
             className="login-form-button"
+            onClick={onLogInGoogle}
           >
             <img
               src={google}

@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 
 import { initializeApp, } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import {SignUp} from './SignUp';
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -28,7 +28,7 @@ type status = {
   message: string
 }
 
-export const signUp = async (form: any): Promise<status> => {
+export const signUp = (form: any): Promise<status> => {
     return createUserWithEmailAndPassword(auth, form.username, form.password)
     .then((userCredential) => {
         const user = userCredential.user;
@@ -46,3 +46,22 @@ export const signUp = async (form: any): Promise<status> => {
         }
     });
 };
+
+export const logInGoogle = (): Promise<status> => {
+  return signInWithPopup(auth, new GoogleAuthProvider())
+  .then((userCredential) => {
+      const user = userCredential.user;
+      return {
+        success: true,
+        message: "User has been created successfully!"
+      }
+  })
+  .catch((error) => {
+      const errorCode = error.code; 
+      const errorMessage = error.message;
+      return {
+        success: false,
+        message: errorMessage
+      }
+  });
+}
