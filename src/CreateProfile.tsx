@@ -7,15 +7,15 @@ const { Title } = Typography;
 
 const onFinish = (values: any) => {
     console.log("Success:", values);
-  };
+};
 
-  const onFinishFailed = (errorInfo: any) => {
+const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
-  };
+};
 
 const CreateProfile: React.FC = () => {
   return (
-    <div className="centered-wrapper" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+    <div className="centered-wrapper">
         <Title level={2} style={{marginBottom: "1em"}}>Join Community</Title>
         <Form
         name="createProfile"
@@ -25,34 +25,44 @@ const CreateProfile: React.FC = () => {
         onFinish={onFinish}
         autoComplete="off"
         >
-
-            <Form.Item label="Name" name="name" rules={[{ required: true, message: 'Please enter your name' }]}>
+            <Form.Item
+                label="Name"
+                name="name"
+                rules={[{ required: true, message: "Please enter your name" }]}>
                 <Input />
             </Form.Item>
 
             <Form.Item label="Profile Picture" name="profilePicture">
                 <Upload>
-                <Button icon={<UploadOutlined />}>Upload</Button>
+                    <Button icon={<UploadOutlined />}>Upload</Button>
                 </Upload>
             </Form.Item>
 
-            <Form.Item label="Instagram Handle" name="instagramHandle">
+            <Form.Item 
+                label="Instagram Handle" 
+                name="instagramHandle">
                 <Input
                     prefix={<InstagramOutlined className="site-form-item-icon" />}
                 />
             </Form.Item>
 
-            <Form.Item label="Community" name="community" rules={[{ required: true, message: 'Select a community to join' }]}>
+            <Form.Item 
+                label="Community" 
+                name="community" 
+                rules={[{ required: true, message: 'Select a community to join' }]}>
                 <Select>
-                <Option value="comm1">Maple Hall</Option>
-                <Option value="comm2">Lander Hall</Option>
-                <Option value="comm3">Willow Hall</Option>
-                <Option value="comm4">The M</Option>
-                <Option value="comm5">Oliv</Option>
+                    <Option value="comm1">Maple Hall</Option>
+                    <Option value="comm2">Lander Hall</Option>
+                    <Option value="comm3">Willow Hall</Option>
+                    <Option value="comm4">The M</Option>
+                    <Option value="comm5">Oliv</Option>
                 </Select>
             </Form.Item>
 
-            <Form.Item label="Room Number" name="roomNumber" rules={[{ required: true, message: 'Enter a room number' }]}>
+            <Form.Item 
+                label="Room Number" 
+                name="roomNumber" 
+                rules={[{ required: true, message: 'Enter a room number' }]}>
                 <Input />
             </Form.Item>
 

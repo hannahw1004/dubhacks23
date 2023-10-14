@@ -185,7 +185,7 @@ export const SignUp: React.FC = () => {
           </Button>
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>
-          Already have an account? <Link to="/">Log in here</Link>!
+          Already have an account? <Link to="/login">Log in here</Link>!
         </Form.Item>
       </Form>
     </div>
