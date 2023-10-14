@@ -15,7 +15,7 @@ code {
     monospace;
 }
 
-.centered-wrapper{
+.centered-wrapper {
   width: 100vw;
   height: 100vh;
   display: flex; 
@@ -26,3 +26,12 @@ code {
   flex-direction: column;
 }
 
+.right-wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: flex-end; /* Align to the bottom */
+  justify-content: center; /* Align to the right */
+  flex-direction: column;
+  margin-right: 20px;
+}
