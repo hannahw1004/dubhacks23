@@ -48,6 +48,25 @@ export const signUp = (form: any): Promise<status> => {
     });
 };
 
+export const logIn = (form: any): Promise<status> => {
+    return signInWithEmailAndPassword(auth, form.username, form.password)
+    .then((userCredential) => {
+        const user = userCredential.user;
+        return {
+          success: true,
+          message: "User has been created successfully!"
+        }
+    })
+    .catch((error) => {
+        const errorCode = error.code; 
+        const errorMessage = error.message;
+        return {
+          success: false,
+          message: errorMessage
+        }
+    });
+};
+
 
 
 export const logInGoogle = (): Promise<status> => {
