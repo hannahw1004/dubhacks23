@@ -1,7 +1,8 @@
 // Import the functions you need from the SDKs you need
 
 import { initializeApp, } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getFirestore} from "firebase/firestore";
 import {SignUp} from './SignUp';
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -46,6 +47,27 @@ export const signUp = (form: any): Promise<status> => {
         }
     });
 };
+
+export const logIn = (form: any): Promise<status> => {
+    return signInWithEmailAndPassword(auth, form.username, form.password)
+    .then((userCredential) => {
+        const user = userCredential.user;
+        return {
+          success: true,
+          message: "User has been created successfully!"
+        }
+    })
+    .catch((error) => {
+        const errorCode = error.code; 
+        const errorMessage = error.message;
+        return {
+          success: false,
+          message: errorMessage
+        }
+    });
+};
+
+
 
 export const logInGoogle = (): Promise<status> => {
   return signInWithPopup(auth, new GoogleAuthProvider())
