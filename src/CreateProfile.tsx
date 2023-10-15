@@ -6,7 +6,7 @@ import { notification } from "antd";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./firebase";
 import { useNavigate } from "react-router-dom";
-import { addProfile } from "./firebase";
+import { addProfile, userHasProfile } from "./firebase";
 
 const { Option } = Select;
 const { Title } = Typography;
@@ -27,7 +27,15 @@ const CreateProfile: React.FC = () => {
       // redirect to home page
       navigate("/login");
     }
-  });
+  }, [user, loading, navigate]);
+  useEffect(() => {
+    (async () => {
+      const hasProfile = await userHasProfile();
+      if (hasProfile) {
+        navigate("/dashboard");
+      }
+    })();
+  }, []);
   const [api, contextHolder] = notification.useNotification();
   const openNotification = (success: boolean, message: string) => {
     if (success) {

@@ -8,8 +8,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import { getFirestore, addDoc, collection, Bytes } from "firebase/firestore";
-import { SignUp } from "./SignUp";
+import { getFirestore, setDoc, doc, Bytes, getDoc } from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -98,8 +97,7 @@ export const addProfile = async (form: any): Promise<status> => {
   // community, room number, and description
   const bytes = Bytes.fromUint8Array(new Uint8Array(await form.profilePicture.file.originFileObj.arrayBuffer()));
   try {
-    const res = await addDoc(collection(db, "users"), {
-      id: auth.currentUser!.uid,
+    const res = await setDoc(doc(db, "users/"+auth.currentUser!.uid), {
       name: form.name,
       profilePicture: bytes,
       profilePictureType: form.profilePicture.file.type,
@@ -120,3 +118,13 @@ export const addProfile = async (form: any): Promise<status> => {
     };
   }
 };
+
+export const userHasProfile = async (): Promise<boolean> => {
+  const docRef = doc(db, "users/"+auth.currentUser!.uid);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    return true;
+  } else {
+    return false;
+  }
+}
