@@ -11,6 +11,7 @@ import {
   setDoc,
   doc,
   Bytes,
+  addDoc,
   getDoc,
   getDocs,
   collection,
