@@ -117,6 +117,7 @@ export const addProfile = async (form: any): Promise<status> => {
       community: form.community,
       roomNumber: form.roomNumber,
       description: form.description,
+      floor: form.floorNumber,
     });
     const docRef = doc(
       db,
