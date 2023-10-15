@@ -1,9 +1,14 @@
 // Import the functions you need from the SDKs you need
 
-import { initializeApp, } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { getFirestore} from "firebase/firestore";
-import {SignUp} from './SignUp';
+import { initializeApp } from "firebase/app";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
+import { getFirestore, setDoc, doc, Bytes, getDoc } from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -23,67 +28,106 @@ export const firebaseConfig = {
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+export const db = getFirestore(app);
 
 type status = {
-  success: boolean,
-  message: string
-}
+  success: boolean;
+  message: string;
+};
 
 export const signUp = (form: any): Promise<status> => {
-    return createUserWithEmailAndPassword(auth, form.username, form.password)
+  return createUserWithEmailAndPassword(auth, form.username, form.password)
     .then((userCredential) => {
-        const user = userCredential.user;
-        return {
-          success: true,
-          message: "User has been created successfully!"
-        }
+      const user = userCredential.user;
+      return {
+        success: true,
+        message: "User has been created successfully!",
+      };
     })
     .catch((error) => {
-        const errorCode = error.code; 
-        const errorMessage = error.message;
-        return {
-          success: false,
-          message: errorMessage
-        }
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      return {
+        success: false,
+        message: errorMessage,
+      };
     });
 };
 
 export const logIn = (form: any): Promise<status> => {
-    return signInWithEmailAndPassword(auth, form.username, form.password)
+  return signInWithEmailAndPassword(auth, form.username, form.password)
     .then((userCredential) => {
-        const user = userCredential.user;
-        return {
-          success: true,
-          message: "User has been created successfully!"
-        }
-    })
-    .catch((error) => {
-        const errorCode = error.code; 
-        const errorMessage = error.message;
-        return {
-          success: false,
-          message: errorMessage
-        }
-    });
-};
-
-
-
-export const logInGoogle = (): Promise<status> => {
-  return signInWithPopup(auth, new GoogleAuthProvider())
-  .then((userCredential) => {
       const user = userCredential.user;
       return {
         success: true,
-        message: "User has been created successfully!"
-      }
-  })
-  .catch((error) => {
-      const errorCode = error.code; 
+        message: "User has been created successfully!",
+      };
+    })
+    .catch((error) => {
+      const errorCode = error.code;
       const errorMessage = error.message;
       return {
         success: false,
-        message: errorMessage
-      }
-  });
+        message: errorMessage,
+      };
+    });
+};
+
+export const logInGoogle = (): Promise<status> => {
+  return signInWithPopup(auth, new GoogleAuthProvider())
+    .then((userCredential) => {
+      const user = userCredential.user;
+      return {
+        success: true,
+        message: "User has been created successfully!",
+      };
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      return {
+        success: false,
+        message: errorMessage,
+      };
+    });
+};
+
+export const addProfile = async (form: any): Promise<status> => {
+  // adds a new document with the name, profile picture, instagram handle,
+  // community, room number, and description
+  const bytes = Bytes.fromUint8Array(new Uint8Array(await form.profilePicture.file.originFileObj.arrayBuffer()));
+  try {
+    const res = await setDoc(doc(db, "users/"+auth.currentUser!.uid), {
+      name: form.name,
+      profilePicture: bytes,
+      profilePictureType: form.profilePicture.file.type,
+      instagramHandle: form.instagramHandle,
+      community: form.community,
+      roomNumber: form.roomNumber,
+      description: form.description,
+    });
+    console.log(res);
+    return {
+      success: true,
+      message: "Profile has been created successfully!",
+    };
+  } catch (e: any) {
+    return {
+      success: false,
+      message: e.message,
+    };
+  }
+};
+
+export const userHasProfile = async (): Promise<boolean> => {
+  if (auth.currentUser == null) {
+    return false;
+  }
+  const docRef = doc(db, "users/"+auth.currentUser!.uid);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    return true;
+  } else {
+    return false;
+  }
 }
