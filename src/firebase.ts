@@ -111,7 +111,7 @@ export const addProfile = async (form: any): Promise<status> => {
       name: form.name,
       profilePicture: bytes,
       profilePictureType: form.profilePicture.file.type,
-      instagramHandle: form.instagramHandle,
+      instagramHandle: form.instagramHandle ?? "",
       community: form.community,
       roomNumber: form.roomNumber,
       description: form.description,

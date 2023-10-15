@@ -104,7 +104,7 @@ const CreateProfile: React.FC = () => {
           <Input />
         </Form.Item>
 
-        <Form.Item label="Profile Picture" name="profilePicture">
+        <Form.Item label="Profile Picture" name="profilePicture" rules={[{required: true, message: "Please upload a profile picture"}]}>
           <Upload {...props}>
             <Button icon={<UploadOutlined />}>Upload</Button>
           </Upload>
