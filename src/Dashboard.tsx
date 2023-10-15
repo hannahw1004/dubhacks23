@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   Button,
-  Row,
+  Flex,
   Col,
   Popconfirm,
   message,
@@ -103,7 +103,7 @@ const DashboardGrid = ({
     <div style={{width: '100%', display: "flex"}}>
       <div style={{width: '50%'}}>
         <h2>Rooms With Requests</h2>
-        <Row gutter={16}>
+        <Flex wrap="wrap">
           {rooms.map((room: Room, index) => (
             <Col span={6} key={index}>
               <Popconfirm
@@ -116,7 +116,7 @@ const DashboardGrid = ({
               </Popconfirm>
             </Col>
           ))}
-        </Row>
+        </Flex>
       </div>
       {legend}
     </div>
