@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input, Typography } from "antd";
+import { Button, Checkbox, Form, Input, Typography, Spin } from "antd";
 import { notification } from "antd";
 import { logIn, logInGoogle } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -30,10 +30,11 @@ const emailRegex =
 export const LogIn: React.FC = () => {
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
+  const [done, setDone] = useState(false);
   useEffect(() => {
-    if (loading) {
+    if (!loading) {
       // maybe trigger a loading screen
-      return;
+      setDone(true);
     }
     if (user) {
       // redirect to home page
@@ -68,6 +69,10 @@ export const LogIn: React.FC = () => {
     const status = await logInGoogle();
     openNotification(status.success, status.message);
   };
+
+  if (!done) {
+    return <div className="centered-wrapper"><Spin size="large"/></div>;
+  }
   return (
     <div className="centered-wrapper">
       {contextHolder}
