@@ -1,117 +1,114 @@
 body {
-  margin: 0;
-  width: 100vw;
-  height: 100vh;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 .desc {
-  color: rgb(80, 80, 80);
-  font-size: 1.2em;
+    color: rgb(80, 80, 80);
+    font-size: 1.2em;
 }
 
 .centered-wrapper {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  float: right;
-  float: left;
-  flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    float: right;
+    float: left;
+    flex-direction: column;
 }
 
 .background {
-  background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url("/public/stickies.jpg");
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/public/stickies.jpg");
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.background > .background-text {
-  color: white;
-  margin-left: 3em;
+.background>.background-text {
+    color: white;
+    margin-left: 3em;
 }
 
-.background > .background-text > h1 {
-  font-size: 100px;
+.background>.background-text>h1 {
+    font-size: 100px;
 }
 
-.background > .background-text > h2 {
-  font-size: 50px;
+.background>.background-text>h2 {
+    font-size: 50px;
 }
 
 .right-wrapper {
-  margin: 1em;
-  width: calc(100vw-2em);
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  /* Align to the bottom */
-  justify-content: center;
-  /* Align to the right */
-  flex-direction: row;
-  flex-wrap: nowrap;
-  gap: 2em;
+    margin: 1em;
+    width: calc(100vw-2em);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    /* Align to the bottom */
+    justify-content: center;
+    /* Align to the right */
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 2em;
 }
 
 .image {
-  width: 700px;
+    width: 700px;
 }
 
 .top-bottom {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 @keyframes jumpInfinite {
-  0% {
-    bottom: 30px;
-    opacity: 1;
-  }
-  50% {
-    bottom: 40px;
-    opacity: 0.3;
-  }
-  100% {
-    bottom: 30px;
-    opacity: 1;
-  }
+    0% {
+        bottom: 30px;
+        opacity: 1;
+    }
+    50% {
+        bottom: 40px;
+        opacity: 0.3;
+    }
+    100% {
+        bottom: 30px;
+        opacity: 1;
+    }
 }
 
 .down-arrow {
-  animation: jumpInfinite 1.4s ease-in-out infinite;
-  position: absolute;
-  bottom: 40px;
-  left: calc(50% - 37.5px);
-  width: 75px;
-  stroke-width: 8px;
+    animation: jumpInfinite 1.4s ease-in-out infinite;
+    position: absolute;
+    bottom: 40px;
+    left: calc(50% - 37.5px);
+    width: 75px;
+    stroke-width: 8px;
 }
 
 .down-arrow.delayed {
-  animation-delay: 0.1s;
-  transform: translateY(11px);
+    animation-delay: 0.1s;
+    transform: translateY(11px);
 }
 
 .arrow-container {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100vw;
-  transition: opacity 500ms;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    transition: opacity 500ms;
 }
 
 .arrow-container.no_opacity {
-  opacity: 0;
+    opacity: 0;
 }
