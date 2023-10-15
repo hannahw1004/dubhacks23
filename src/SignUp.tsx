@@ -106,7 +106,7 @@ export const SignUp: React.FC = () => {
       <Form
         onFinish={onFinish}
         name="basic"
-        labelCol={{ span: 10 }}
+        labelCol={{ span: 4 }}
         wrapperCol={{ span: 16 }}
         style={{ width: 500 }}
         layout="horizontal"
@@ -119,7 +119,7 @@ export const SignUp: React.FC = () => {
           theme={{
             token: {
               colorPrimary:'#77529F',
-              borderRadius: 2,
+              borderRadius: 4,
               colorBgContainer: '#FFFFFF',
             },
           }}
@@ -164,7 +164,7 @@ export const SignUp: React.FC = () => {
 
           <Form.Item
             name="confirm"
-            label="Confirm Password"
+            label="Confirm"
             dependencies={["password"]}
             hasFeedback
             rules={[
@@ -193,12 +193,12 @@ export const SignUp: React.FC = () => {
           </Form.Item>
         </ConfigProvider>
 
-        <Form.Item {...tailFormItemLayout}>
+        <Form.Item wrapperCol = {{ offset: 5, span: 16 }}>
 
           <ConfigProvider theme={{
             token: {
               colorPrimary:'#77529F',
-              borderRadius: 2,
+              borderRadius: 4,
               colorBgContainer: '#77529F',
             },          
           }}> 
@@ -216,7 +216,7 @@ export const SignUp: React.FC = () => {
           theme={{
             token: {
               colorPrimary:'#77529F',
-              borderRadius: 2,
+              borderRadius: 4,
               colorBgContainer: '#FFFFFF',
             },          
           }}> 
@@ -240,7 +240,7 @@ export const SignUp: React.FC = () => {
           </ConfigProvider>
 
         </Form.Item>
-        <Form.Item {...tailFormItemLayout}>
+        <Form.Item wrapperCol = {{ offset: 6, span: 16 }}>
           Already have an account? <Link to="/login" className="login-form-forgot">Log in here</Link>!
         </Form.Item>
       </Form>

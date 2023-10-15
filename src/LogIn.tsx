@@ -94,7 +94,7 @@ export const LogIn: React.FC = () => {
           theme={{
             token: {
               colorPrimary:'#77529F',
-              borderRadius: 2,
+              borderRadius: 4,
               colorBgContainer: '#FFFFFF',
             },
           }}
@@ -142,7 +142,7 @@ export const LogIn: React.FC = () => {
         <ConfigProvider theme={{
           token: {
             colorPrimary:'#ECB1CA',
-            borderRadius: 2,
+            borderRadius: 4,
             colorBgContainer: '#FFFFFF',
           }
         }}>
@@ -162,7 +162,7 @@ export const LogIn: React.FC = () => {
           theme={{
             token: {
               colorPrimary:'#77529F',
-              borderRadius: 2,
+              borderRadius: 4,
               colorBgContainer: '#77529F',
             },          
           }}> 
@@ -180,7 +180,7 @@ export const LogIn: React.FC = () => {
           theme={{
             token: {
               colorPrimary:'#77529F',
-              borderRadius: 2,
+              borderRadius: 4,
               colorBgContainer: '#FFFFFF',
             },          
           }}> 
@@ -209,7 +209,6 @@ export const LogIn: React.FC = () => {
             Forgot password?
           </a>
           &nbsp;Or <Link to="/signup" className="login-form-forgot">register now!</Link>
-          
         </Form.Item>
       </Form>
     </div>
