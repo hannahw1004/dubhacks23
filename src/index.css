@@ -11,9 +11,18 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
+.header {
+    color: rgb(88, 107, 164);
+    font-size: 30px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: italic;
+}
+
 .desc {
-    color: rgb(80, 80, 80);
-    font-size: 1.2em;
+    background-color: rgba(225, 239, 246, 0.623);
+    color: rgb(164, 140, 190);
+    font-size: 25px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .centered-wrapper {
@@ -61,6 +70,43 @@ code {
     flex-direction: row;
     flex-wrap: nowrap;
     gap: 2em;
+}
+
+.get-started-button {
+    background-color: rgb(236, 203, 217);
+    width: 200px;
+    height: 50px;
+    font-size: 23px;
+    font-style: inherit;
+}
+
+.login-form-button {
+    background-color: rgb(236, 203, 217);
+}
+
+.login-form-forgot {
+    color: rgb(119, 82, 159);
+}
+
+.register-form-button {
+    background-color: rgb(236, 203, 217);
+}
+
+.checkbox {
+    .ant-checkbox-checked .ant-checkbox-inner {
+        background-color: rgb(119, 82, 159);
+        ;
+        border-color: rgb(119, 82, 159);
+        ;
+    }
+    .ant-checkbox-wrapper:hover .ant-checkbox-inner,
+    .ant-checkbox:hover .ant-checkbox-inner,
+    .ant-checkbox-input:focus+.ant-checkbox-inner {
+        border-color: rgb(119, 82, 159);
+    }
+    .ant-checkbox-indeterminate .ant-checkbox-inner::after {
+        background-color: rgb(119, 82, 159);
+    }
 }
 
 .image {

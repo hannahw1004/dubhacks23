@@ -1,38 +1,52 @@
-import React, {useState, useEffect} from 'react';
-import { Button, Row, Col, Popconfirm, message, Tabs, Spin } from 'antd';
+import React, { useState, useEffect } from "react";
+import {
+  Button,
+  Row,
+  Col,
+  Popconfirm,
+  message,
+  Spin,
+  Tabs,
+} from "antd";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./firebase";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import NavBar from "./NavBar";
 
-import {getFloorsFromCommunity, getRoomsFromFloor, getUserInfo} from './firebase'
-
-const{TabPane} = Tabs;
+import {
+  getFloorsFromCommunity,
+  getRoomsFromFloor,
+  getUserInfo,
+} from "./firebase";
 
 type DashboardGripProps = {
-  floor: string,
-  community: string
-}
+  floor: string;
+  community: string;
+};
 
-const DashboardGrid = ({floor, community}: DashboardGripProps): JSX.Element => {
+const currentPath = window.location.pathname;
+const modalRoutes = ["/dashboard", "/requests", "/notifications"];
+const { TabPane } = Tabs;
 
+const DashboardGrid = ({
+  floor,
+  community,
+}: DashboardGripProps): JSX.Element => {
   const [rooms, setRooms] = useState<any[]>([]);
 
   const handleConfirm = () => {
-    message.success('Button clicked!');
+    message.success("Button clicked!");
   };
 
   useEffect(() => {
-    (
-      async () => {
-        const rooms = await getRoomsFromFloor(community, floor);
-        setRooms(rooms);
-      }
-    )();
-  }, []
-  );
+    (async () => {
+      const rooms = await getRoomsFromFloor(community, floor);
+      setRooms(rooms);
+    })();
+  }, []);
 
-  if(rooms.length === 0){
-    return <Spin/>;
+  if (rooms.length === 0) {
+    return <Spin />;
   }
 
   return (
@@ -56,9 +70,7 @@ const DashboardGrid = ({floor, community}: DashboardGripProps): JSX.Element => {
   );
 };
 
-
 export const DashboardTabs = () => {
-
   const [user, loading, error] = useAuthState(auth);
 
   const [floors, setFloors] = useState<string[]>([]);
@@ -68,7 +80,7 @@ export const DashboardTabs = () => {
   useEffect(() => {
     if (!loading && user) {
       (async () => {
-        const res = await getUserInfo(user)
+        const res = await getUserInfo(user);
         console.log(res);
         const community = res.community;
         const floors = await getFloorsFromCommunity(community);
@@ -83,20 +95,19 @@ export const DashboardTabs = () => {
     }
   }, [user, loading]);
 
-  if(floors.length === 0){
-    return <Spin/>;
+  if (floors.length === 0) {
+    return <Spin />;
   }
 
   return (
-    <Tabs>
-      {floors.map((floor, index) => (
-        <TabPane tab={"floor " + floor} key={index}>
-          <DashboardGrid floor={floor} community={community}/>
-        </TabPane>
-      ))}
-    </Tabs>
+      <Tabs>
+        {floors.map((floor, index) => (
+          <TabPane tab={"floor " + floor} key={index}>
+            <DashboardGrid floor={floor} community={community} />
+          </TabPane>
+        ))}
+      </Tabs>
   );
 };
 
 export default DashboardTabs;
-

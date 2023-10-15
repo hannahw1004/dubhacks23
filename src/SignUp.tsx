@@ -186,13 +186,14 @@ export const SignUp: React.FC = () => {
           <Button
             type="primary"
             htmlType="submit"
+            className="register-form-button"
             style={{ marginRight: "1em" }}
           >
             Register
           </Button>
           <Button
             type="default"
-            className="login-form-button"
+            className="login-form-buttons"
             onClick={onLogInGoogle}
           >
             <img
@@ -209,7 +210,7 @@ export const SignUp: React.FC = () => {
           </Button>
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>
-          Already have an account? <Link to="/login">Log in here</Link>!
+          Already have an account? <Link to="/login" className="login-form-forgot">Log in here</Link>!
         </Form.Item>
       </Form>
     </div>

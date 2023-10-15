@@ -107,8 +107,10 @@ export const logInGoogle = (): Promise<status> => {
 export const addProfile = async (form: any): Promise<status> => {
   // adds a new document with the name, profile picture, instagram handle,
   // community, room number, and description
+  const data = await form.profilePicture.file.originFileObj.arrayBuffer();
+  console.log(data);
   const bytes = Bytes.fromUint8Array(
-    new Uint8Array(await form.profilePicture.file.originFileObj.arrayBuffer())
+    new Uint8Array(data)
   );
   try {
     await setDoc(doc(db, "users", auth.currentUser!.uid), {
@@ -119,6 +121,7 @@ export const addProfile = async (form: any): Promise<status> => {
       community: form.community,
       roomNumber: form.roomNumber,
       description: form.description,
+      floor: form.floorNumber,
     });
     const docRef = doc(
       db,
