@@ -309,10 +309,8 @@ export const confirmRequest = async (community: string, floor: string, room: str
       room.toString()
     );
     await updateDoc(docRef, {
-      request: {
-        status: "accepted",
-        user: user,
-      }
+      "request.status": "accepted",
+      "request.user": user,
     });
     return {
       success: true,
