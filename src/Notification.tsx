@@ -27,7 +27,7 @@ const Notification: React.FC = () => {
   }
   return (
     <div>
-      <h1>{request === null ? "You currently have not added a Request"
+      <h1>{request === undefined || request === null ? "You currently have not added a Request"
            : request.status === "accepted" ? `Your request for ${request.description} has been accepted by ${request?.user}!`
            : `Your request for ${request.description} is still pending`}</h1>
     </div>
