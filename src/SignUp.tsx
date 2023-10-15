@@ -119,7 +119,7 @@ export const SignUp: React.FC = () => {
           theme={{
             token: {
               colorPrimary:'#77529F',
-              borderRadius: 2,
+              borderRadius: 4,
               colorBgContainer: '#FFFFFF',
             },
           }}
@@ -198,7 +198,7 @@ export const SignUp: React.FC = () => {
           <ConfigProvider theme={{
             token: {
               colorPrimary:'#77529F',
-              borderRadius: 2,
+              borderRadius: 4,
               colorBgContainer: '#77529F',
             },          
           }}> 
@@ -216,7 +216,7 @@ export const SignUp: React.FC = () => {
           theme={{
             token: {
               colorPrimary:'#77529F',
-              borderRadius: 2,
+              borderRadius: 4,
               colorBgContainer: '#FFFFFF',
             },          
           }}> 

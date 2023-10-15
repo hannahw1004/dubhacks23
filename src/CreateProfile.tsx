@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Form, Input, Button, Select, Upload, Typography, InputNumber, Spin } from "antd";
+import { Form, Input, Button, Select, Upload, Typography, InputNumber, Spin, ConfigProvider } from "antd";
 import { UploadOutlined, InstagramOutlined } from "@ant-design/icons";
 import type { UploadProps } from "antd";
 import { notification } from "antd";
@@ -96,7 +96,15 @@ const CreateProfile: React.FC = () => {
         onFinish={onFinish}
         autoComplete="off"
       >
-        <Form.Item
+        <ConfigProvider
+          theme={{
+            token: {
+              colorPrimary:'#77529F',
+              borderRadius: 4,
+              colorBgContainer: '#FFFFFF',
+            },
+          }}>
+            <Form.Item
           label="Name"
           name="name"
           rules={[{ required: true, message: "Please enter your name" }]}
@@ -149,12 +157,23 @@ const CreateProfile: React.FC = () => {
         <Form.Item label="Description" name="description">
           <Input.TextArea />
         </Form.Item>
+        </ConfigProvider>
+        
+        <ConfigProvider
+          theme={{
+            token: {
+              colorPrimary:'#77529F',
+              borderRadius: 4,
+              colorBgContainer: '#77529F',
+            },
+          }}>
+            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+              <Button type="primary" htmlType="submit" className="login-form-button">
+                Create Profile
+              </Button>
+            </Form.Item>
+          </ConfigProvider>
 
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit" className="login-form-button">
-            Create Profile
-          </Button>
-        </Form.Item>
       </Form>
     </div>
   );
