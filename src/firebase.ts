@@ -221,3 +221,7 @@ export const getUserInfo = async (user: User): Promise<any> => {
     return null;
   }
 };
+
+export const logout = async (): Promise<void> => {
+  await auth.signOut();
+}
