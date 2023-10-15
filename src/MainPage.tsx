@@ -4,6 +4,7 @@ import { Layout, Tabs } from "antd";
 import DashboardTabs from "./Dashboard";
 import CreateRequest from "./Request";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Notification from "./Notification";
 const { Sider, Content } = Layout;
 
 export const MainPage: React.FC = () => {
@@ -17,6 +18,7 @@ export const MainPage: React.FC = () => {
             <Route path="/" element={<DashboardTabs />} />
             <Route path="/dashboard" element={<DashboardTabs />} />
             <Route path="/requests" element={<CreateRequest />} />
+            <Route path="/notifications" element={<Notification />} />
           </Routes>
         </Content>
       </Layout>

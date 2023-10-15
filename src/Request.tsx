@@ -57,7 +57,7 @@ const CreateRequest: React.FC = () => {
   
   const onFinish = async (values: any) => {
     console.log("Success:", values);
-    const status = await addRequest(values, userInfo.community, userInfo.floor, userInfo.roomNumber);
+    const status = await addRequest(values, userInfo.community, userInfo.floor, userInfo.roomNumber, userInfo.name);
     openNotification(status.success, status.message);
     if (status.success) {
         navigate("/app/dashboard");

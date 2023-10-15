@@ -9,9 +9,10 @@ import {
   Tabs,
 } from "antd";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "./firebase";
+import { auth, confirmRequest } from "./firebase";
 import { useNavigate } from "react-router-dom";
 import NavBar from "./NavBar";
+import type { Room } from "./firebase";
 
 import {
   getFloorsFromCommunity,
@@ -22,28 +23,23 @@ import {
 type DashboardGripProps = {
   floor: string;
   community: string;
+  user: string;
 };
 
 const currentPath = window.location.pathname;
 const modalRoutes = ["/dashboard", "/requests", "/notifications"];
 const { TabPane } = Tabs;
 
-type Room = {
-  id: string,
-  data: any,
-}
-
 const DashboardGrid = ({
   floor,
   community,
+  user,
 }: DashboardGripProps): JSX.Element => {
   const [rooms, setRooms] = useState<any[]>([]);
 
-  const handleConfirm = (room: Room) => {
-    console.log(room.data);
-    for (const request of room.data.requests) {
-      message.success("You clicked on room with type " + request.type + " and description " + request.description);
-    }
+  const handleConfirm = async (room: Room) => {
+    await confirmRequest(community, floor, room.id, user);
+    message.success("Request confirmed!");
   };
 
   useEffect(() => {
@@ -61,10 +57,10 @@ const DashboardGrid = ({
     <div>
       <h2>Button Grid with Popconfirm</h2>
       <Row gutter={16}>
-        {rooms.map((room, index) => (
+        {rooms.map((room: Room, index) => (
           <Col span={6} key={index}>
             <Popconfirm
-              title={`Are you sure you want to click button for "${room.id}"?`}
+              title={`Room ${room.id} has requested ${room.request?.description ?? "nothing"}`}
               onConfirm={() => handleConfirm(room)}
               okText="Yes"
               cancelText="No"
@@ -83,6 +79,7 @@ export const DashboardTabs = () => {
 
   const [floors, setFloors] = useState<string[]>([]);
   const [community, setCommunity] = useState<string>("");
+  const [userInfo, setUserInfo] = useState<any>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -94,6 +91,7 @@ export const DashboardTabs = () => {
         const floors = await getFloorsFromCommunity(community);
         setFloors(floors);
         setCommunity(community);
+        setUserInfo(res);
         console.log(floors);
       })();
     }
@@ -111,7 +109,7 @@ export const DashboardTabs = () => {
       <Tabs>
         {floors.map((floor, index) => (
           <TabPane tab={"floor " + floor} key={index}>
-            <DashboardGrid floor={floor} community={community} />
+            <DashboardGrid floor={floor} community={community} user={userInfo.name} />
           </TabPane>
         ))}
       </Tabs>
