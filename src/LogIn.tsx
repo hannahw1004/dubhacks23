@@ -132,7 +132,7 @@ export const LogIn: React.FC = () => {
           valuePropName="checked"
           wrapperCol={{ offset: 4, span: 16 }}
         >
-          <Checkbox>Remember me</Checkbox>
+          <Checkbox className="checkbox">Remember me</Checkbox>
         </Form.Item>
 
         <Form.Item {...tailLayout}>
