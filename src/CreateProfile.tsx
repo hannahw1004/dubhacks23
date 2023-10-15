@@ -6,7 +6,7 @@ import { notification } from "antd";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./firebase";
 import { useNavigate } from "react-router-dom";
-import { addProfile } from "./firebase";
+import { addProfile, userHasProfile } from "./firebase";
 
 const { Option } = Select;
 const { Title } = Typography;
@@ -27,7 +27,15 @@ const CreateProfile: React.FC = () => {
       // redirect to home page
       navigate("/login");
     }
-  });
+  }, [user, loading, navigate]);
+  useEffect(() => {
+    (async () => {
+      const hasProfile = await userHasProfile();
+      if (hasProfile) {
+        navigate("/dashboard");
+      }
+    })();
+  }, []);
   const [api, contextHolder] = notification.useNotification();
   const openNotification = (success: boolean, message: string) => {
     if (success) {
@@ -50,16 +58,24 @@ const CreateProfile: React.FC = () => {
       if (!isImage) {
         openNotification(false, `${file.name} is not supported`);
       }
-      return isImage || Upload.LIST_IGNORE;
+      const isGt1M = file.size / 1024 / 1024 > 1;
+      if (isGt1M) {
+        openNotification(false, `${file.name} is too large (max 1MB)`);
+      }
+      return isImage || Upload.LIST_IGNORE || !isGt1M;
     },
     onChange: (info) => {
-      console.log(info.fileList);
+        info.file.status = "done";
     },
+    listType: "picture",
   };
   const onFinish = async (values: any) => {
     console.log("Success:", values);
     const status = await addProfile(values);
     openNotification(status.success, status.message);
+    if (status.success) {
+        navigate("/dashboard");
+    }
   };
 
   return (
