@@ -25,6 +25,7 @@ const NavBar = () => {
   const userMenu = (
     <>
       <h2 style={{textAlign: "center"}}>{userInfo?.name}</h2>
+      <p>Community: {userInfo?.community}</p>
       <p>Room: {userInfo?.roomNumber}</p>
       <p>Instagram: {userInfo?.instagramHandle}</p>
       <div style={{width: "100%", display: "flex", justifyContent: "center"}}>
