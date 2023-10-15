@@ -1,5 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import { Button, Row, Col, Popconfirm, message, Tabs, Spin } from 'antd';
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "./firebase";
+import { useNavigate } from 'react-router-dom';
 
 import {getFloorsFromCommunity, getRoomsFromFloor, getUserInfo} from './firebase'
 
@@ -39,12 +42,12 @@ const DashboardGrid = ({floor, community}: DashboardGripProps): JSX.Element => {
         {rooms.map((room, index) => (
           <Col span={6} key={index}>
             <Popconfirm
-              title={`Are you sure you want to click button for "${room}"?`}
+              title={`Are you sure you want to click button for "${index}"?`}
               onConfirm={handleConfirm}
               okText="Yes"
               cancelText="No"
             >
-              <Button type="primary">Button for "{room}"</Button>
+              <Button type="primary">Button for "{index}"</Button>
             </Popconfirm>
           </Col>
         ))}
@@ -55,20 +58,30 @@ const DashboardGrid = ({floor, community}: DashboardGripProps): JSX.Element => {
 
 
 export const DashboardTabs = () => {
+
+  const [user, loading, error] = useAuthState(auth);
+
   const [floors, setFloors] = useState<string[]>([]);
   const [community, setCommunity] = useState<string>("");
-
+  const navigate = useNavigate();
 
   useEffect(() => {
-    (
-      async () => {
-        const {community} = await getUserInfo()
-        setFloors(await getFloorsFromCommunity(community)); 
+    if (!loading && user) {
+      (async () => {
+        const res = await getUserInfo(user)
+        console.log(res);
+        const community = res.community;
+        const floors = await getFloorsFromCommunity(community);
+        setFloors(floors);
         setCommunity(community);
-      }
-    )()
-  }, []
-  );
+        console.log(floors);
+      })();
+    }
+    if (!user) {
+      // redirect to home page
+      navigate("/login");
+    }
+  }, [user, loading]);
 
   if(floors.length === 0){
     return <Spin/>;

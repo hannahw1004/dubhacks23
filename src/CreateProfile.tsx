@@ -122,11 +122,11 @@ const CreateProfile: React.FC = () => {
           rules={[{ required: true, message: "Select a community to join" }]}
         >
           <Select>
-            <Option value="comm1">Maple Hall</Option>
-            <Option value="comm2">Lander Hall</Option>
-            <Option value="comm3">Willow Hall</Option>
-            <Option value="comm4">The M</Option>
-            <Option value="comm5">Oliv</Option>
+            <Option value="maple">Maple Hall</Option>
+            <Option value="lander">Lander Hall</Option>
+            <Option value="willow">Willow Hall</Option>
+            <Option value="m">The M</Option>
+            <Option value="olv">Oliv</Option>
           </Select>
         </Form.Item>
 
