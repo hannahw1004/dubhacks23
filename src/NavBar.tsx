@@ -28,23 +28,26 @@ const NavBar = () => {
                     left: 0
                 }}
             >
+                <div style={{width: "100%"}}>
+                    <Button
+                        type="primary"
+                        onClick={() => setCollapsed(!collapsed)}
+                        style={{marginBottom: 16, width: "calc(100% - 8px)", marginInline: "4px", marginBlock: "4px"}}>
+                            {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                    </Button>
+                </div>
                 <Menu.Item
                     key="1"
-                    icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-                    onClick={() => setCollapsed(!collapsed)}>
-                </Menu.Item>
-                <Menu.Item
-                    key="2"
                     icon={<HomeOutlined />}>
                     <Link to="/app/dashboard">Dashboard</Link>
                 </Menu.Item>
                 <Menu.Item
-                    key="3"
+                    key="2"
                     icon={<UnorderedListOutlined />}>
                     <Link to="/app/requests">My Requests</Link>
                 </Menu.Item>
                 <Menu.Item
-                    key="4"
+                    key="3"
                     icon={<BellOutlined />}>
                     <Link to="/app/notifications">Notifications</Link>
                 </Menu.Item>
