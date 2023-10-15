@@ -19,7 +19,7 @@ code {
 }
 
 .desc {
-    background-color: rgba(255, 253, 221, 0.733);
+    background-color: rgba(225, 239, 246, 0.623);
     color: rgb(164, 140, 190);
     font-size: 25px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -70,6 +70,14 @@ code {
     flex-direction: row;
     flex-wrap: nowrap;
     gap: 2em;
+}
+
+.get-started-button {
+    background-color: rgb(236, 203, 217);
+    width: 200px;
+    height: 50px;
+    font-size: 23px;
+    font-style: inherit;
 }
 
 .image {
