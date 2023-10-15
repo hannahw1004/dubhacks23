@@ -36,17 +36,17 @@ const NavBar = () => {
                 <Menu.Item
                     key="2"
                     icon={<HomeOutlined />}>
-                    <Link to="/dashboard">Dashboard</Link>
+                    <Link to="/app/dashboard">Dashboard</Link>
                 </Menu.Item>
                 <Menu.Item
                     key="3"
                     icon={<UnorderedListOutlined />}>
-                    <Link to="/requests">My Requests</Link>
+                    <Link to="/app/requests">My Requests</Link>
                 </Menu.Item>
                 <Menu.Item
                     key="4"
                     icon={<BellOutlined />}>
-                    <Link to="/notifications">Notifications</Link>
+                    <Link to="/app/notifications">Notifications</Link>
                 </Menu.Item>
             </Menu>
         </Sider>

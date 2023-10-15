@@ -25,7 +25,7 @@ const CreateProfile: React.FC = () => {
       (async () => {
         const hasProfile = await userHasProfile();
         if (hasProfile) {
-          navigate("/dashboard");
+          navigate("/app/dashboard");
         } else {
             setDone(true);
         }
@@ -74,7 +74,7 @@ const CreateProfile: React.FC = () => {
     const status = await addProfile(values);
     openNotification(status.success, status.message);
     if (status.success) {
-        navigate("/dashboard");
+        navigate("/app/dashboard");
     }
   };
 
