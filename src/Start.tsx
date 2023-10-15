@@ -16,7 +16,7 @@ const Start: React.FC = () => {
     <div className="right-wrapper">
       <img src="logo1.png" className="image"></img>
       <div className="top-bottom">
-        <p>"Connecting Lives, Building Communities!"</p>
+        <h1>"Connecting Lives, Building Communities!"</h1>
         <p>Welcome to CaC: Create a Community, where the power of connection trnasforms living
           spaces into vibrant communities. Whether you're a student in a dorm or a resident in
           an apartment, we're here to help you create meaningful connections and support
