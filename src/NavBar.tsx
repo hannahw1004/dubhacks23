@@ -17,7 +17,7 @@ const NavBar = () => {
             collapsible
             collapsed={collapsed}
         >
-            <div className="demo-logo-vertical" />
+            <img src="/logo192.png" alt="logo" style={{width: "90%"}}/>
             <Menu
                 theme="dark"
                 mode="inline"
