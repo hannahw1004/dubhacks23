@@ -82,11 +82,16 @@ code {
 
 .login-form-button {
     background-color: rgb(236, 203, 217);
-    color: rgb(255, 251, 0);
+    color: rgb(255, 246, 119);
 }
 
 .login-form-forgot {
     color: rgb(119, 82, 159);
+}
+
+.register-form-button {
+    background-color: rgb(236, 203, 217);
+    color: rgb(255, 246, 119);
 }
 
 .image {
