@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import Start from './Start';
 import {SignUp} from './SignUp';
 import {LogIn} from './LogIn';
+import Dashboard from './Dashboard'
 import CreateProfile from './CreateProfile';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -14,6 +15,8 @@ function App() {
         <Route path="/login" element={<LogIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/createprofile" element={<CreateProfile />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        
       </Routes>
     </Router>
   );
