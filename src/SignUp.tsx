@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Button, Form, Input, Typography } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import google from "./google.svg";
 import { signUp, logInGoogle } from "./firebase";
-import { notification } from 'antd';
+import { notification } from "antd";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "./firebase";
 
 const { Title } = Typography;
 
@@ -42,44 +44,57 @@ const tailFormItemLayout = {
   },
 };
 
-const emailRegex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
+const emailRegex =
+  /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
 
-export const SignUp: React.FC = () => { 
+export const SignUp: React.FC = () => {
+  const [user, loading, error] = useAuthState(auth);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (loading) {
+      // maybe trigger a loading screen
+      return;
+    }
+    if (user) {
+      // redirect to home page
+      navigate("/createprofile");
+    }
+  }, [user, loading, navigate]);
   const [api, contextHolder] = notification.useNotification();
   const openNotification = (success: boolean, message: string) => {
     if (success) {
       api.success({
         message: "Success",
         description: message,
-        placement: "bottomRight"
+        placement: "bottomRight",
       });
     } else {
       api.error({
         message: "Error",
         description: message,
-        placement: "bottomRight"
+        placement: "bottomRight",
       });
     }
   };
-
-  const navigate = useNavigate();
 
   const onFinish = async (values: any) => {
     console.log("Success:", values);
     const status = await signUp(values);
     console.log(status);
     openNotification(status.success, status.message);
-    navigate('/createprofile');
+    navigate("/createprofile");
   };
 
   const onLogInGoogle = async () => {
     const status = await logInGoogle();
     openNotification(status.success, status.message);
-  }
+  };
   return (
     <div className="centered-wrapper">
       {contextHolder}
-      <Title level={2} style={{marginBottom: "1em"}}>Register</Title>
+      <Title level={2} style={{ marginBottom: "1em" }}>
+        Register
+      </Title>
       <Form
         onFinish={onFinish}
         name="basic"
@@ -105,7 +120,8 @@ export const SignUp: React.FC = () => {
                   new Error("Please enter a valid email address")
                 );
               },
-            })]}
+            }),
+          ]}
         >
           <Input
             size="large"

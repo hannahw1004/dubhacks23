@@ -1,4 +1,5 @@
 import React from 'react';
+import logo1 from "./logo1.png";
 import { Link } from "react-router-dom";
 import { Button } from "antd";
 
@@ -17,6 +18,7 @@ const Start: React.FC = () => {
             <Button type="primary" className="get-started-button">
                 Get started!
             </Button>
+           
         </Link>
       </div>
     );
