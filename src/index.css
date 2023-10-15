@@ -73,7 +73,7 @@ code {
 }
 
 .get-started-button {
-    background-color: rgb(236, 203, 217);
+    background-color: rgb(236, 177, 202);
     width: 200px;
     height: 50px;
     font-size: 23px;
@@ -81,7 +81,7 @@ code {
 }
 
 .login-form-button {
-    background-color: rgb(236, 203, 217);
+    background-color: rgb(236, 177, 202);
 }
 
 .login-form-forgot {
@@ -89,7 +89,7 @@ code {
 }
 
 .register-form-button {
-    background-color: rgb(236, 203, 217);
+    background-color: rgb(236, 177, 202);
 }
 
 .checkbox {

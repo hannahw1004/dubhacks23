@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form, Input, Typography, Spin } from "antd";
+import { Button, Form, Input, Typography, Spin, ConfigProvider } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import google from "./google.svg";
@@ -114,83 +114,112 @@ export const SignUp: React.FC = () => {
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <Form.Item<FieldType>
-          label="Email"
-          name="username"
-          rules={[
-            { required: true, message: "Please enter your email" },
-            () => ({
-              validator(_, value) {
-                if (value.length === 0 || emailRegex.test(value)) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(
-                  new Error("Please enter a valid email address")
-                );
-              },
-            }),
-          ]}
-        >
-          <Input
-            size="large"
-            prefix={<UserOutlined className="site-form-item-icon" />}
-            type="username"
-            placeholder="Email"
-          />
-        </Form.Item>
 
-        <Form.Item<FieldType>
-          label="Password"
-          name="password"
-          rules={[{ required: true, message: "Please enter a password" }]}
-        >
-          <Input.Password
-            size="large"
-            prefix={<LockOutlined className="site-form-item-icon" />}
-            type="password"
-            placeholder="Password"
-          />
-        </Form.Item>
-
-        <Form.Item
-          name="confirm"
-          label="Confirm Password"
-          dependencies={["password"]}
-          hasFeedback
-          rules={[
-            {
-              required: true,
-              message: "Please confirm the password",
+        <ConfigProvider
+          theme={{
+            token: {
+              colorPrimary:'#77529F',
+              borderRadius: 2,
+              colorBgContainer: '#FFFFFF',
             },
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (!value || getFieldValue("password") === value) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(
-                  new Error("Passwords entered do not match")
-                );
-              },
-            }),
-          ]}
+          }}
         >
-          <Input.Password
-            size="large"
-            prefix={<LockOutlined className="site-form-item-icon" />}
-            type="Confirm Password"
-            placeholder="Confirm Password"
-          />
-        </Form.Item>
+          <Form.Item<FieldType>
+            label="Email"
+            name="username"
+            rules={[
+              { required: true, message: "Please enter your email" },
+              () => ({
+                validator(_, value) {
+                  if (value.length === 0 || emailRegex.test(value)) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error("Please enter a valid email address")
+                  );
+                },
+              }),
+            ]}
+          >
+            <Input
+              size="large"
+              prefix={<UserOutlined className="site-form-item-icon" />}
+              type="username"
+              placeholder="Email"
+            />
+          </Form.Item>
+
+          <Form.Item<FieldType>
+            label="Password"
+            name="password"
+            rules={[{ required: true, message: "Please enter a password" }]}
+          >
+            <Input.Password
+              size="large"
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              type="password"
+              placeholder="Password"
+            />
+          </Form.Item>
+
+          <Form.Item
+            name="confirm"
+            label="Confirm Password"
+            dependencies={["password"]}
+            hasFeedback
+            rules={[
+              {
+                required: true,
+                message: "Please confirm the password",
+              },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("password") === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error("Passwords entered do not match")
+                  );
+                },
+              }),
+            ]}
+          >
+            <Input.Password
+              size="large"
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              type="Confirm Password"
+              placeholder="Confirm Password"
+            />
+          </Form.Item>
+        </ConfigProvider>
 
         <Form.Item {...tailFormItemLayout}>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="register-form-button"
-            style={{ marginRight: "1em" }}
-          >
-            Register
-          </Button>
+
+          <ConfigProvider theme={{
+            token: {
+              colorPrimary:'#77529F',
+              borderRadius: 2,
+              colorBgContainer: '#77529F',
+            },          
+          }}> 
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="register-form-button"
+              style={{ marginRight: "1em" }}
+            >
+              Register
+            </Button>
+          </ConfigProvider>
+
+          <ConfigProvider 
+          theme={{
+            token: {
+              colorPrimary:'#77529F',
+              borderRadius: 2,
+              colorBgContainer: '#FFFFFF',
+            },          
+          }}> 
           <Button
             type="default"
             className="login-form-buttons"
@@ -207,7 +236,9 @@ export const SignUp: React.FC = () => {
               }}
             />
             Register with Google
-          </Button>
+          </Button> 
+          </ConfigProvider>
+
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>
           Already have an account? <Link to="/login" className="login-form-forgot">Log in here</Link>!

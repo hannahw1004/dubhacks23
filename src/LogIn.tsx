@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input, Typography, Spin } from "antd";
+import { Button, Checkbox, Form, Input, Typography, Spin, ConfigProvider } from "antd";
 import { notification } from "antd";
 import { logIn, logInGoogle } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -79,6 +79,7 @@ export const LogIn: React.FC = () => {
       <Title level={2} style={{ marginBottom: "1em" }}>
         Log In
       </Title>
+
       <Form
         name="basic"
         labelCol={{ span: 4 }}
@@ -89,7 +90,16 @@ export const LogIn: React.FC = () => {
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <Form.Item<FieldType>
+        <ConfigProvider
+          theme={{
+            token: {
+              colorPrimary:'#77529F',
+              borderRadius: 2,
+              colorBgContainer: '#FFFFFF',
+            },
+          }}
+        >
+            <Form.Item<FieldType>
           label="Email"
           name="username"
           rules={[
@@ -127,28 +137,58 @@ export const LogIn: React.FC = () => {
           />
         </Form.Item>
 
-        <Form.Item<FieldType>
-          name="remember"
-          valuePropName="checked"
-          wrapperCol={{ offset: 4, span: 16 }}
-        >
-          <Checkbox className="checkbox">Remember me</Checkbox>
-        </Form.Item>
+        </ConfigProvider>
+
+        <ConfigProvider theme={{
+          token: {
+            colorPrimary:'#ECB1CA',
+            borderRadius: 2,
+            colorBgContainer: '#FFFFFF',
+          }
+        }}>
+            <Form.Item<FieldType>
+            name="remember"
+            valuePropName="checked"
+            wrapperCol={{ offset: 4, span: 16 }}
+          >
+            <Checkbox className="checkbox">Remember me</Checkbox>
+          </Form.Item>
+        </ConfigProvider>
+        
 
         <Form.Item {...tailLayout}>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="login-form-button"
-            style={{ marginRight: "1em" }}
-          >
-            Log In
-          </Button>
+
+          <ConfigProvider 
+          theme={{
+            token: {
+              colorPrimary:'#77529F',
+              borderRadius: 2,
+              colorBgContainer: '#77529F',
+            },          
+          }}> 
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="login-form-button"
+              style={{ marginRight: "1em" }}
+            >
+              Log In
+            </Button>
+          </ConfigProvider>
+
+          <ConfigProvider 
+          theme={{
+            token: {
+              colorPrimary:'#77529F',
+              borderRadius: 2,
+              colorBgContainer: '#FFFFFF',
+            },          
+          }}> 
           <Button
             type="default"
             className="login-form-buttons"
             onClick={onLogInGoogle}
-          >
+            >
             <img
               src={google}
               alt="Google"
@@ -161,12 +201,15 @@ export const LogIn: React.FC = () => {
             />
             Log In With Google
           </Button>
+            
+          </ConfigProvider>
         </Form.Item>
         <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
           <a className="login-form-forgot" href="">
             Forgot password?
           </a>
           &nbsp;Or <Link to="/signup" className="login-form-forgot">register now!</Link>
+          
         </Form.Item>
       </Form>
     </div>

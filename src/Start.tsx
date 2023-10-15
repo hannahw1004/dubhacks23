@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Link } from "react-router-dom";
-import { Button } from "antd";
+import { Button, ConfigProvider } from "antd";
 import arrow from "./angle-down-svgrepo-com.svg";
 
 const onFinish = (values: any) => {
@@ -46,11 +46,21 @@ const Start: React.FC = () => {
             making your living space more than just a place to stay - it's a
             place to belong. Explore, connect, and grow with us today!
           </p>
-          <Link to="/login">
-            <Button type="primary" className="get-started-button">
-              Get started!
-            </Button>
-          </Link>
+          <ConfigProvider 
+            theme={{
+              token: {
+                colorPrimary:'#77529F',
+                borderRadius: 2,
+                colorBgContainer: '#77529F',
+              },          
+          }}>
+            <Link to="/login">
+              <Button type="primary" className="get-started-button">
+                Get started!
+              </Button>
+            </Link>
+          </ConfigProvider>
+          
         </div>
       </div>
     </>
