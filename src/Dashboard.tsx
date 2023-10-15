@@ -1,6 +1,8 @@
 import React from 'react';
 import { Button, Row, Col, Popconfirm, message, Tabs } from 'antd';
 
+import {getFloorsFromCommunity, getRoomsFromFloor, getUserInfo} from './firebase'
+
 const{TabPane} = Tabs;
 
 const DashboardGrid: React.FC = () => {
@@ -8,15 +10,7 @@ const DashboardGrid: React.FC = () => {
     message.success('Button clicked!');
   };
 
-  const rooms = [
-    'Entry 1',
-    'Entry 2',
-    'Entry 3',
-    'Entry 4',
-    // Add room data
-  ];
-
-  DashboardTabs(rooms);
+  const rooms = getRoomsFromFloor;
 
   return (
     <div>
@@ -40,7 +34,7 @@ const DashboardGrid: React.FC = () => {
 };
 
 
-export const DashboardTabs = (data: Floors[]) => {
+export const DashboardTabs = (data: getFloorsFromCommunity()) => {
   return (
     <Tabs>
       {data.map((floor, index) => (
