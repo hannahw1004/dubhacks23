@@ -209,7 +209,6 @@ export const LogIn: React.FC = () => {
             Forgot password?
           </a>
           &nbsp;Or <Link to="/signup" className="login-form-forgot">register now!</Link>
-          
         </Form.Item>
       </Form>
     </div>
