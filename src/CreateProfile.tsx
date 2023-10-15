@@ -35,6 +35,7 @@ const CreateProfile: React.FC = () => {
             <Form.Item label="Profile Picture" name="profilePicture">
                 <Upload>
                     <Button icon={<UploadOutlined />}>Upload</Button>
+                    
                 </Upload>
             </Form.Item>
 

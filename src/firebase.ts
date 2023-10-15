@@ -45,6 +45,7 @@ export const signUp = (form: any): Promise<status> => {
           success: false,
           message: errorMessage
         }
+        
     });
 };
 
@@ -54,6 +55,7 @@ export const logIn = (form: any): Promise<status> => {
         const user = userCredential.user;
         return {
           success: true,
+          
           message: "User has been created successfully!"
         }
     })
