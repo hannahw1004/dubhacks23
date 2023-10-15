@@ -28,6 +28,20 @@
     color: #61dafb;
 }
 
+.app-container {
+    display: flex;
+}
+
+.expanded {
+    margin-left: 200px;
+    transition: margin-left 0.3s;
+}
+
+.collapsed {
+    margin-left: 80px;
+    transition: margin-left 0.3s;
+}
+
 @keyframes App-logo-spin {
     from {
         transform: rotate(0deg);
