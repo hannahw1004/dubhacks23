@@ -69,7 +69,7 @@ const CreateRequest: React.FC = () => {
   }
 
   return (
-    <div className="centered-wrapper">
+    <div>
       {contextHolder} 
       <Title level={2} style={{ marginBottom: "1em" }}>
         Create Request
