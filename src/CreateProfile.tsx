@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Form, Input, Button, Select, Upload, Typography, InputNumber } from "antd";
+import React, { useEffect, useState } from "react";
+import { Form, Input, Button, Select, Upload, Typography, InputNumber, Spin } from "antd";
 import { UploadOutlined, InstagramOutlined } from "@ant-design/icons";
 import type { UploadProps } from "antd";
 import { notification } from "antd";
@@ -17,25 +17,25 @@ const onFinishFailed = (errorInfo: any) => {
 
 const CreateProfile: React.FC = () => {
   const [user, loading, error] = useAuthState(auth);
+  const [done, setDone] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
-    if (loading) {
+    if (!loading && user) {
       // maybe trigger a loading screen
-      return;
+      (async () => {
+        const hasProfile = await userHasProfile();
+        if (hasProfile) {
+          navigate("/dashboard");
+        } else {
+            setDone(true);
+        }
+      })();
     }
     if (!user) {
       // redirect to home page
       navigate("/login");
     }
   }, [user, loading, navigate]);
-  useEffect(() => {
-    (async () => {
-      const hasProfile = await userHasProfile();
-      if (hasProfile) {
-        navigate("/dashboard");
-      }
-    })();
-  }, []);
   const [api, contextHolder] = notification.useNotification();
   const openNotification = (success: boolean, message: string) => {
     if (success) {
@@ -77,6 +77,10 @@ const CreateProfile: React.FC = () => {
         navigate("/dashboard");
     }
   };
+
+  if (!done) {
+    return <div className="centered-wrapper"><Spin size="large" /></div>;
+  }
 
   return (
     <div className="centered-wrapper">

@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Button, Form, Input, Typography } from "antd";
+import React, { useEffect, useState } from "react";
+import { Button, Form, Input, Typography, Spin } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import google from "./google.svg";
@@ -49,11 +49,12 @@ const emailRegex =
 
 export const SignUp: React.FC = () => {
   const [user, loading, error] = useAuthState(auth);
+  const [done, setDone] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
-    if (loading) {
+    if (!loading) {
       // maybe trigger a loading screen
-      return;
+      setDone(true);
     }
     if (user) {
       // redirect to home page
@@ -89,6 +90,13 @@ export const SignUp: React.FC = () => {
     const status = await logInGoogle();
     openNotification(status.success, status.message);
   };
+  if (!done) {
+    return (
+      <div className="centered-wrapper">
+        <Spin size="large" />
+      </div>
+    );
+  }
   return (
     <div className="centered-wrapper">
       {contextHolder}

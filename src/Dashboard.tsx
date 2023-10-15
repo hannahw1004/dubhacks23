@@ -1,38 +1,56 @@
-import React, { useState } from 'react';
-import type { RadioChangeEvent } from 'antd';
-import { Radio, Tabs } from 'antd';
+import React from 'react';
+import { Button, Row, Col, Popconfirm, message, Tabs } from 'antd';
 
-type TabPosition = 'left' | 'right' | 'top' | 'bottom';
+const{TabPane} = Tabs;
 
-const dashboard: React.FC = () => {
-  const [mode, setMode] = useState<TabPosition>('top');
-
-  const handleModeChange = (e: RadioChangeEvent) => {
-    setMode(e.target.value);
+const DashboardGrid: React.FC = () => {
+  const handleConfirm = () => {
+    message.success('Button clicked!');
   };
+
+  const rooms = [
+    'Entry 1',
+    'Entry 2',
+    'Entry 3',
+    'Entry 4',
+    // Add room data
+  ];
+
+  DashboardTabs(rooms);
 
   return (
     <div>
-      <Radio.Group onChange={handleModeChange} value={mode} style={{ marginBottom: 8 }}>
-        <Radio.Button value="top">Horizontal</Radio.Button>
-        <Radio.Button value="left">Vertical</Radio.Button>
-      </Radio.Group>
-      <Tabs
-        defaultActiveKey="1"
-        tabPosition={mode}
-        style={{ height: 220 }}
-        items={new Array(30).fill(null).map((_, i) => {
-          const id = String(i);
-          return {
-            label: `Tab-${id}`,
-            key: id,
-            disabled: i === 28,
-            children: `Content of tab ${id}`,
-          };
-        })}
-      />
+      <h2>Button Grid with Popconfirm</h2>
+      <Row gutter={16}>
+        {rooms.map((room, index) => (
+          <Col span={6} key={index}>
+            <Popconfirm
+              title={`Are you sure you want to click button for "${room}"?`}
+              onConfirm={handleConfirm}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button type="primary">Button for "{room}"</Button>
+            </Popconfirm>
+          </Col>
+        ))}
+      </Row>
     </div>
   );
 };
 
-export default dashboard;
+
+export const DashboardTabs = (data: Floors[]) => {
+  return (
+    <Tabs>
+      {data.map((floor, index) => (
+        <TabPane tab={floor.title} key={index}>
+          {floor.content}
+        </TabPane>
+      ))}
+    </Tabs>
+  );
+};
+
+export default DashboardTabs;
+
