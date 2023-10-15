@@ -119,7 +119,7 @@ const NavBar = () => {
               )}
             </Popover>
             {collapsed ? null : (
-              <div style={{ marginLeft: "0.5em" }}>{user?.displayName}</div>
+              <div style={{ marginLeft: "0.5em" }}>{userInfo?.name}</div>
             )}
           </div>
         </Menu>
