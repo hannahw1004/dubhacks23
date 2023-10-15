@@ -103,7 +103,7 @@ const DashboardGrid = ({
     <div style={{width: '100%', display: "flex"}}>
       <div style={{width: '50%'}}>
         <h2>Rooms With Requests</h2>
-        <Flex wrap="wrap">
+        <Flex wrap="wrap" align="flex-start" justify="flex-start" gap="middle">
           {rooms.map((room: Room, index) => (
             <Col span={6} key={index}>
               <Popconfirm
