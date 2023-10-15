@@ -151,7 +151,7 @@ const CreateProfile: React.FC = () => {
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" className="login-form-button">
             Create Profile
           </Button>
         </Form.Item>
