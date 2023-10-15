@@ -62,11 +62,12 @@ const CreateProfile: React.FC = () => {
       if (isGt1M) {
         openNotification(false, `${file.name} is too large (max 1MB)`);
       }
-      return !isImage || Upload.LIST_IGNORE || isGt1M;
+      return isImage || Upload.LIST_IGNORE || !isGt1M;
     },
     onChange: (info) => {
-      console.log(info.fileList);
+        info.file.status = "done";
     },
+    listType: "picture",
   };
   const onFinish = async (values: any) => {
     console.log("Success:", values);
