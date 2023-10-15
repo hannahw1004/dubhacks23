@@ -69,7 +69,7 @@ const DashboardGrid = ({
               okText="Yes"
               cancelText="No"
             >
-              <Button type="primary">Button for "{room.id}"</Button>
+              <Button type="primary">Room {room.id}</Button>
             </Popconfirm>
           </Col>
         ))}
