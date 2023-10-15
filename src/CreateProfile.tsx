@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Form, Input, Button, Select, Upload, Typography } from "antd";
+import { Form, Input, Button, Select, Upload, Typography, InputNumber } from "antd";
 import { UploadOutlined, InstagramOutlined } from "@ant-design/icons";
 import type { UploadProps } from "antd";
 import { notification } from "antd";
@@ -132,6 +132,14 @@ const CreateProfile: React.FC = () => {
           rules={[{ required: true, message: "Enter a room number" }]}
         >
           <Input />
+        </Form.Item>
+
+        <Form.Item
+            label="Floor Number"
+            name="floorNumber"
+            rules={[{ required: true, message: "Enter a floor number" }]}
+        >
+            <InputNumber />
         </Form.Item>
 
         <Form.Item label="Description" name="description">
