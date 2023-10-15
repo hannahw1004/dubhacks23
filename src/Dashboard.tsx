@@ -28,14 +28,22 @@ const currentPath = window.location.pathname;
 const modalRoutes = ["/dashboard", "/requests", "/notifications"];
 const { TabPane } = Tabs;
 
+type Room = {
+  id: string,
+  data: any,
+}
+
 const DashboardGrid = ({
   floor,
   community,
 }: DashboardGripProps): JSX.Element => {
   const [rooms, setRooms] = useState<any[]>([]);
 
-  const handleConfirm = () => {
-    message.success("Button clicked!");
+  const handleConfirm = (room: Room) => {
+    console.log(room.data);
+    for (const request of room.data.requests) {
+      message.success("You clicked on room with type " + request.type + " and description " + request.description);
+    }
   };
 
   useEffect(() => {
@@ -56,12 +64,12 @@ const DashboardGrid = ({
         {rooms.map((room, index) => (
           <Col span={6} key={index}>
             <Popconfirm
-              title={`Are you sure you want to click button for "${index}"?`}
-              onConfirm={handleConfirm}
+              title={`Are you sure you want to click button for "${room.id}"?`}
+              onConfirm={() => handleConfirm(room)}
               okText="Yes"
               cancelText="No"
             >
-              <Button type="primary">Button for "{index}"</Button>
+              <Button type="primary">Room {room.id}</Button>
             </Popconfirm>
           </Col>
         ))}
