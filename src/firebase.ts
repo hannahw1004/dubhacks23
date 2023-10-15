@@ -102,7 +102,9 @@ export const logInGoogle = (): Promise<status> => {
 export const addProfile = async (form: any): Promise<status> => {
   // adds a new document with the name, profile picture, instagram handle,
   // community, room number, and description
-  const bytes = Bytes.fromUint8Array(new Uint8Array(await form.profilePicture.file.originFileObj.arrayBuffer()));
+  const bytes = Bytes.fromUint8Array(
+    new Uint8Array(await form.profilePicture.file.originFileObj.arrayBuffer())
+  );
   try {
     const res = await addDoc(collection(db, "users"), {
       id: auth.currentUser!.uid,
@@ -166,14 +168,36 @@ export const getFloorsFromCommunity = async (
   return docs;
 };
 
+type Room = {
+  id: string;
+  data: any;
+};
+
 export const getRoomsFromFloor = async (
-  community: string, floor: string
-): Promise<string[]> => {
-  const docRef = collection(db, "communities/" + community + "/floors/" + floor + "/rooms/");
+  community: string,
+  floor: string
+): Promise<Room[]> => {
+  const docRef = collection(
+    db,
+    "communities/" + community + "/floors/" + floor + "/rooms/"
+  );
   const querySnapshot = await getDocs(docRef);
-  const docs: string[] = [];
+  const docs: Room[] = [];
   querySnapshot.forEach((doc) => {
-    docs.push(doc.id);
+    docs.push({
+      id: doc.id,
+      data: doc.data(),
+    });
   });
   return docs;
 };
+
+export const getUserInfo = async (): Promise<any> => {
+  const docRef = doc(db, "users/" + auth.currentUser!.uid);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    return docSnap.data();
+  } else {
+    return null;
+  }
+}
