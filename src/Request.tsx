@@ -22,7 +22,21 @@ const onFinishFailed = (errorInfo: any) => {
 const CreateRequest: React.FC = () => {
   const [user, loading, error] = useAuthState(auth);
   const [done, setDone] = useState(false);
+  const [userInfo, setUserInfo] = useState<any>(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      (async () => {
+        const userInfo = await getUserInfo(user);
+        if (userInfo === null) {
+          navigate("/createprofile");
+        }
+        setUserInfo(userInfo);
+        setDone(true);
+      })();
+    }
+  }, [user, loading]);
   
   const [api, contextHolder] = notification.useNotification();
   const openNotification = (success: boolean, message: string) => {
@@ -43,10 +57,10 @@ const CreateRequest: React.FC = () => {
   
   const onFinish = async (values: any) => {
     console.log("Success:", values);
-    const status = await addRequest(values);
+    const status = await addRequest(values, userInfo.community, userInfo.floor, userInfo.roomNumber);
     openNotification(status.success, status.message);
     if (status.success) {
-        navigate("/dashboard");
+        navigate("/app/dashboard");
     }
   };
 

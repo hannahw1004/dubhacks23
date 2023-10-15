@@ -237,24 +237,24 @@ export const addRequest = async (form: any, community: string, floor: string, ro
  
   try {
 
-    const roomRef = doc(db, "rooms", auth.currentUser!.uid);
+    const docRef = doc(
+      db,
+      "communities",
+      community,
+      "floors",
+      floor.toString(),
+      "rooms",
+      room.toString()
+    );
 
-    await updateDoc(roomRef, {
+    await updateDoc(docRef, {
       requests: arrayUnion({
         type: form.type,
         description: form.description,
       })
     });
 
-    const docRef = doc(
-      db,
-      "communities",
-      community,
-      "floors",
-      floor,
-      "rooms",
-      room
-    );
+    
 
     return {
       success: true,
