@@ -1,16 +1,36 @@
-import React from 'react';
-import { Button, Row, Col, Popconfirm, message, Tabs } from 'antd';
+import React, {useState, useEffect} from 'react';
+import { Button, Row, Col, Popconfirm, message, Tabs, Spin } from 'antd';
 
 import {getFloorsFromCommunity, getRoomsFromFloor, getUserInfo} from './firebase'
 
 const{TabPane} = Tabs;
 
-const DashboardGrid: React.FC = () => {
+type DashboardGripProps = {
+  floor: string,
+  community: string
+}
+
+const DashboardGrid = ({floor, community}: DashboardGripProps): JSX.Element => {
+
+  const [rooms, setRooms] = useState<any[]>([]);
+
   const handleConfirm = () => {
     message.success('Button clicked!');
   };
 
-  const rooms = getRoomsFromFloor;
+  useEffect(() => {
+    (
+      async () => {
+        const rooms = await getRoomsFromFloor(community, floor);
+        setRooms(rooms);
+      }
+    )();
+  }, []
+  );
+
+  if(rooms.length === 0){
+    return <Spin/>;
+  }
 
   return (
     <div>
@@ -34,12 +54,31 @@ const DashboardGrid: React.FC = () => {
 };
 
 
-export const DashboardTabs = (data: getFloorsFromCommunity()) => {
+export const DashboardTabs = () => {
+  const [floors, setFloors] = useState<string[]>([]);
+  const [community, setCommunity] = useState<string>("");
+
+
+  useEffect(() => {
+    (
+      async () => {
+        const {community} = await getUserInfo()
+        setFloors(await getFloorsFromCommunity(community)); 
+        setCommunity(community);
+      }
+    )()
+  }, []
+  );
+
+  if(floors.length === 0){
+    return <Spin/>;
+  }
+
   return (
     <Tabs>
-      {data.map((floor, index) => (
-        <TabPane tab={floor.title} key={index}>
-          {floor.content}
+      {floors.map((floor, index) => (
+        <TabPane tab={"floor " + floor} key={index}>
+          <DashboardGrid floor={floor} community={community}/>
         </TabPane>
       ))}
     </Tabs>
