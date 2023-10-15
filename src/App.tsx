@@ -7,18 +7,33 @@ import Dashboard from './Dashboard'
 import CreateProfile from './CreateProfile';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import NavBar from './NavBar';
+import { Layout } from 'antd';
+
+const { Sider, Content } = Layout;
+
 function App() {
+  const currentPath = window.location.pathname;
+  const modalRoutes = ['/dashboard', '/requests', '/notifications'];
+
   return (
+    <div className = "app-container">
     <Router>
-      <Routes>
-        <Route path="/" element={<Start />} />
-        <Route path="/login" element={<LogIn />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/createprofile" element={<CreateProfile />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        
-      </Routes>
+      <Layout>
+        <Sider><NavBar /></Sider>
+        {/* {modalRoutes.includes(currentPath) && <Sider><NavBar /></Sider>} */}
+        <Content style={{ padding: '24px 50px' }}>
+          <Routes>
+            <Route path="/" element={<Start />} />
+            <Route path="/login" element={<LogIn />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/createprofile" element={<CreateProfile />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Routes>
+        </Content>
+      </Layout>
     </Router>
+    </div>
   );
 }
 
