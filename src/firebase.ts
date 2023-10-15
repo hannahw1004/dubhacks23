@@ -16,6 +16,7 @@ import {
   getDocs,
   collection,
 } from "firebase/firestore";
+import type { User } from "firebase/auth";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -102,10 +103,11 @@ export const logInGoogle = (): Promise<status> => {
 export const addProfile = async (form: any): Promise<status> => {
   // adds a new document with the name, profile picture, instagram handle,
   // community, room number, and description
-  const bytes = Bytes.fromUint8Array(new Uint8Array(await form.profilePicture.file.originFileObj.arrayBuffer()));
+  const bytes = Bytes.fromUint8Array(
+    new Uint8Array(await form.profilePicture.file.originFileObj.arrayBuffer())
+  );
   try {
-    const res = await addDoc(collection(db, "users"), {
-      id: auth.currentUser!.uid,
+    await setDoc(doc(db, "users", auth.currentUser!.uid), {
       name: form.name,
       profilePicture: bytes,
       profilePictureType: form.profilePicture.file.type,
@@ -116,24 +118,36 @@ export const addProfile = async (form: any): Promise<status> => {
     });
     const docRef = doc(
       db,
-      "communities/" +
-        form.community +
-        "/floors/" +
-        form.floorNumber +
-        "/rooms/" +
-        form.roomNumber
+      "communities",
+      form.community.toString(),
+      "floors",
+      form.floorNumber.toString(),
+      "rooms",
+      form.roomNumber.toString()
     );
     const docSnap = await getDoc(docRef);
     if (!docSnap.exists()) {
-      await setDoc(docRef, {
-        requests: [],
-      });
+      await Promise.all([
+        setDoc(docRef, {
+          requests: [],
+        }),
+        setDoc(doc(db, "communities", form.community.toString()), {
+          name: form.community.toString(),
+        }),
+        setDoc(
+          doc(db, "communities", form.community.toString(), "floors", form.floorNumber.toString()),
+          {
+            name: form.floorNumber.toString(),
+          }
+        )
+      ]);
     }
     return {
       success: true,
       message: "Profile has been created successfully!",
     };
   } catch (e: any) {
+    console.log(e);
     return {
       success: false,
       message: e.message,
@@ -157,23 +171,57 @@ export const userHasProfile = async (): Promise<boolean> => {
 export const getFloorsFromCommunity = async (
   community: string
 ): Promise<string[]> => {
-  const docRef = collection(db, "communities/" + community + "/floors/");
+  console.log(community);
+  const docRef = collection(db, "communities", community, "floors");
   const querySnapshot = await getDocs(docRef);
   const docs: string[] = [];
   querySnapshot.forEach((doc) => {
     docs.push(doc.id);
+    console.log(doc);
   });
   return docs;
 };
 
+type Room = {
+  id: string;
+  data: any;
+};
+
 export const getRoomsFromFloor = async (
-  community: string, floor: string
-): Promise<string[]> => {
-  const docRef = collection(db, "communities/" + community + "/floors/" + floor + "/rooms/");
+  community: string,
+  floor: string
+): Promise<Room[]> => {
+  const docRef = collection(
+    db,
+    "communities",
+    community,
+    "floors",
+    floor,
+    "rooms"
+  );
   const querySnapshot = await getDocs(docRef);
-  const docs: string[] = [];
+  const docs: Room[] = [];
   querySnapshot.forEach((doc) => {
-    docs.push(doc.id);
+    docs.push({
+      id: doc.id,
+      data: doc.data(),
+    });
   });
   return docs;
 };
+
+export const getUserInfo = async (user: User): Promise<any> => {
+  const docRef = doc(db, "users", user.uid);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    const data = docSnap.data();
+    console.log(data);
+    return data;
+  } else {
+    return null;
+  }
+};
+
+export const logout = async (): Promise<void> => {
+  await auth.signOut();
+}
