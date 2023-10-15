@@ -8,7 +8,15 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import { getFirestore, setDoc, doc, Bytes, getDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  setDoc,
+  doc,
+  Bytes,
+  getDoc,
+  getDocs,
+  collection,
+} from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -113,7 +121,15 @@ export const addProfile = async (form: any): Promise<status> => {
       floorNumber: form.floorNumber,
       description: form.description,
     });
-    const docRef = doc(db, "communities/" + form.community + "/floors/" + form.floorNumber + "/rooms/" + form.roomNumber);
+    const docRef = doc(
+      db,
+      "communities/" +
+        form.community +
+        "/floors/" +
+        form.floorNumber +
+        "/rooms/" +
+        form.roomNumber
+    );
     const docSnap = await getDoc(docRef);
     if (!docSnap.exists()) {
       await setDoc(docRef, {
@@ -143,4 +159,28 @@ export const userHasProfile = async (): Promise<boolean> => {
   } else {
     return false;
   }
+};
+
+export const getFloorsFromCommunity = async (
+  community: string
+): Promise<string[]> => {
+  const docRef = collection(db, "communities/" + community + "/floors/");
+  const querySnapshot = await getDocs(docRef);
+  const docs: string[] = [];
+  querySnapshot.forEach((doc) => {
+    docs.push(doc.id);
+  });
+  return docs;
+};
+
+export const getRoomsFromFloor = async (
+  community: string, floor: string
+): Promise<string[]> => {
+  const docRef = collection(db, "communities/" + community + "/floors/" + floor + "/rooms/");
+  const querySnapshot = await getDocs(docRef);
+  const docs: string[] = [];
+  querySnapshot.forEach((doc) => {
+    docs.push(doc.id);
+  });
+  return docs;
 };
