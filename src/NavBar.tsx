@@ -24,12 +24,14 @@ const NavBar = () => {
 
   const userMenu = (
     <>
-      <h2>{userInfo?.name}</h2>
+      <h2 style={{textAlign: "center"}}>{userInfo?.name}</h2>
       <p>Room: {userInfo?.roomNumber}</p>
       <p>Instagram: {userInfo?.instagramHandle}</p>
-      <Button danger type="primary" onClick={() => logout()}>
-        Logout
-      </Button>
+      <div style={{width: "100%", display: "flex", justifyContent: "center"}}>
+        <Button danger type="primary" onClick={() => logout()}>
+            Logout
+        </Button>
+      </div>
     </>
   );
 
