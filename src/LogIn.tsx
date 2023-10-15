@@ -146,7 +146,7 @@ export const LogIn: React.FC = () => {
           </Button>
           <Button
             type="default"
-            className="login-form-button"
+            className="login-form-buttons"
             onClick={onLogInGoogle}
           >
             <img
@@ -166,8 +166,7 @@ export const LogIn: React.FC = () => {
           <a className="login-form-forgot" href="">
             Forgot password?
           </a>
-          <br />
-          Or <Link to="/signup">register now!</Link>
+          &nbsp;Or <Link to="/signup" className="login-form-forgot">register now!</Link>
         </Form.Item>
       </Form>
     </div>
