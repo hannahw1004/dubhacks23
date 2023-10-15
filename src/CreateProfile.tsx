@@ -73,6 +73,9 @@ const CreateProfile: React.FC = () => {
     console.log("Success:", values);
     const status = await addProfile(values);
     openNotification(status.success, status.message);
+    if (status.success) {
+        navigate("/dashboard");
+    }
   };
 
   return (
