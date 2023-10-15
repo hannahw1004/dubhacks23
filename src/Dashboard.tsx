@@ -37,6 +37,7 @@ const legend = (
   // #6FD3F2: study
   // #F383B6: Maintenance
   // #9DBCE2: social
+  // #FF9933: other
   <div>
     <h2>Legend</h2>
     <div style={{display: 'flex', flexDirection: 'column'}}>
@@ -59,6 +60,10 @@ const legend = (
       <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '1em'}}>
         <div style={{width: '20px', height: '20px', backgroundColor: '#9DBCE2'}}></div>
         <p>Social</p>
+      </div>
+      <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '1em'}}>
+        <div style={{width: '20px', height: '20px', backgroundColor: '#FF9933'}}></div>
+        <p>Other</p>
       </div>
     </div>
   </div>
