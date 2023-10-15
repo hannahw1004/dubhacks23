@@ -94,7 +94,7 @@ const CreateRequest: React.FC = () => {
             <Option value="Party">Social</Option>
             <Option value="Share">Items</Option>
             <Option value="Maintenance">Maintenance</Option>
-            <Option value="other">Other</Option>
+            <Option value="Other">Other</Option>
           </Select>
         </Form.Item>
 

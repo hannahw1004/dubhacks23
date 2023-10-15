@@ -70,7 +70,8 @@ const colorMap: any = {
   "Party": "#9DBCE2",
   "Share": "#C1E153",
   "Maintenance": "#F383B6",
-  "other": "#555555",
+  "Other": "#FF9933",
+  "none": "#555555",
 };
 
 const DashboardGrid = ({
@@ -112,7 +113,7 @@ const DashboardGrid = ({
                 okText="Yes"
                 cancelText="No"
               >
-                <Button type="primary" style={{ background: colorMap[room.request?.type ?? "other"]}}>Room {room.id}</Button>
+                <Button type="primary" style={{ background: colorMap[room.request?.type ?? "none"]}}>Room {room.id}</Button>
               </Popconfirm>
             </Col>
           ))}
