@@ -205,20 +205,10 @@ export const LogIn: React.FC = () => {
           </ConfigProvider>
         </Form.Item>
         <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
-
-          <ConfigProvider 
-            theme={{
-              token: {
-                colorPrimary:'#ECB1CA',
-                borderRadius: 2,
-                colorBgContainer: '#FFFFFF',
-              },          
-            }}> 
-            <a className="login-form-forgot" href="">
-              Forgot password?
-            </a>
-            &nbsp;Or <Link to="/signup" className="login-form-forgot">register now!</Link>
-          </ConfigProvider>
+          <a className="login-form-forgot" href="">
+            Forgot password?
+          </a>
+          &nbsp;Or <Link to="/signup" className="login-form-forgot">register now!</Link>
           
         </Form.Item>
       </Form>
