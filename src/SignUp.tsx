@@ -193,7 +193,7 @@ export const SignUp: React.FC = () => {
           </Form.Item>
         </ConfigProvider>
 
-        <Form.Item wrapperCol = {{ offset: 5, span: 16 }}>
+        <Form.Item wrapperCol = {{ offset: 4, span: 16 }}>
 
           <ConfigProvider theme={{
             token: {
