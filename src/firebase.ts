@@ -9,14 +9,18 @@ import {
 import {
   getFirestore,
   setDoc,
+  updateDoc,
   doc,
   Bytes,
   addDoc,
   getDoc,
   getDocs,
   collection,
+  arrayUnion,
+  arrayRemove,
 } from "firebase/firestore";
 import type { User } from "firebase/auth";
+import { request } from "http";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -225,3 +229,40 @@ export const getUserInfo = async (user: User): Promise<any> => {
 export const logout = async (): Promise<void> => {
   await auth.signOut();
 }
+
+export const addRequest = async (form: any, community: string, floor: string, room: string): Promise<status> => {
+ 
+  try {
+
+    const roomRef = doc(db, "rooms", auth.currentUser!.uid);
+
+    await updateDoc(roomRef, {
+      requests: arrayUnion({
+        type: form.type,
+        description: form.description,
+      })
+    });
+
+    const docRef = doc(
+      db,
+      "communities",
+      community,
+      "floors",
+      floor,
+      "rooms",
+      room
+    );
+
+    return {
+      success: true,
+      message: "Request has been added successfully!",
+    };
+
+  } catch (e: any) {
+    console.log(e);
+    return {
+      success: false,
+      message: e.message,
+    };
+  }
+};
