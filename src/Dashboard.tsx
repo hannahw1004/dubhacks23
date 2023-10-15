@@ -30,6 +30,49 @@ const currentPath = window.location.pathname;
 const modalRoutes = ["/dashboard", "/requests", "/notifications"];
 const { TabPane } = Tabs;
 
+const legend = (
+  // Write a legend with the following colors:
+  // #FFE871: food
+  // #C1E153: items
+  // #6FD3F2: study
+  // #F383B6: Maintenance
+  // #9DBCE2: social
+  <div>
+    <h2>Legend</h2>
+    <div style={{display: 'flex', flexDirection: 'column'}}>
+      <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '1em'}}>
+        <div style={{width: '20px', height: '20px', backgroundColor: '#FFE871'}}></div>
+        <p>Food</p>
+      </div>
+      <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '1em'}}>
+        <div style={{width: '20px', height: '20px', backgroundColor: '#C1E153'}}></div>
+        <p>Items</p>
+      </div>
+      <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '1em'}}>
+        <div style={{width: '20px', height: '20px', backgroundColor: '#6FD3F2'}}></div>
+        <p>Study</p>
+      </div>
+      <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '1em'}}>
+        <div style={{width: '20px', height: '20px', backgroundColor: '#F383B6'}}></div>
+        <p>Maintenance</p>
+      </div>
+      <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '1em'}}>
+        <div style={{width: '20px', height: '20px', backgroundColor: '#9DBCE2'}}></div>
+        <p>Social</p>
+      </div>
+    </div>
+  </div>
+);
+
+const colorMap: any = {
+  "Eat": "#FFE871",
+  "Study": "#6FD3F2",
+  "Party": "#9DBCE2",
+  "Share": "#C1E153",
+  "Maintenance": "#F383B6",
+  "other": "#555555",
+};
+
 const DashboardGrid = ({
   floor,
   community,
@@ -38,6 +81,9 @@ const DashboardGrid = ({
   const [rooms, setRooms] = useState<any[]>([]);
 
   const handleConfirm = async (room: Room) => {
+    if (!room.request) {
+      return;
+    }
     await confirmRequest(community, floor, room.id, user);
     message.success("Request confirmed!");
   };
@@ -54,22 +100,25 @@ const DashboardGrid = ({
   }
 
   return (
-    <div>
-      <h2>Button Grid with Popconfirm</h2>
-      <Row gutter={16}>
-        {rooms.map((room: Room, index) => (
-          <Col span={6} key={index}>
-            <Popconfirm
-              title={`Room ${room.id} has requested ${room.request?.description ?? "nothing"}`}
-              onConfirm={() => handleConfirm(room)}
-              okText="Yes"
-              cancelText="No"
-            >
-              <Button type="primary">Room {room.id}</Button>
-            </Popconfirm>
-          </Col>
-        ))}
-      </Row>
+    <div style={{width: '100%', display: "flex"}}>
+      <div style={{width: '50%'}}>
+        <h2>Rooms With Requests</h2>
+        <Row gutter={16}>
+          {rooms.map((room: Room, index) => (
+            <Col span={6} key={index}>
+              <Popconfirm
+                title={`Room ${room.id} has requested ${room.request?.description ?? "nothing"}`}
+                onConfirm={() => handleConfirm(room)}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Button type="primary" style={{ background: colorMap[room.request?.type ?? "other"]}}>Room {room.id}</Button>
+              </Popconfirm>
+            </Col>
+          ))}
+        </Row>
+      </div>
+      {legend}
     </div>
   );
 };
