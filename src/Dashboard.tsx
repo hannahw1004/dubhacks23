@@ -1,7 +1,9 @@
 import React from 'react';
-import { Button, Row, Col, Popconfirm, message } from 'antd';
+import { Button, Row, Col, Popconfirm, message, Tabs } from 'antd';
 
-const Dashboard: React.FC = () => {
+const{TabPane} = Tabs;
+
+const DashboardGrid: React.FC = () => {
   const handleConfirm = () => {
     message.success('Button clicked!');
   };
@@ -13,6 +15,8 @@ const Dashboard: React.FC = () => {
     'Entry 4',
     // Add room data
   ];
+
+  DashboardTabs(rooms);
 
   return (
     <div>
@@ -35,5 +39,18 @@ const Dashboard: React.FC = () => {
   );
 };
 
-export default Dashboard;
+
+export const DashboardTabs = (data: Floors[]) => {
+  return (
+    <Tabs>
+      {data.map((floor, index) => (
+        <TabPane tab={floor.title} key={index}>
+          {floor.content}
+        </TabPane>
+      ))}
+    </Tabs>
+  );
+};
+
+export default DashboardTabs;
 

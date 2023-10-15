@@ -1,5 +1,3 @@
-// Import the functions you need from the SDKs you need
-
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
@@ -8,7 +6,8 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import { getFirestore, setDoc, doc, Bytes, getDoc } from "firebase/firestore";
+import { getFirestore, addDoc, collection, Bytes } from "firebase/firestore";
+import { SignUp } from "./SignUp";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -95,31 +94,19 @@ export const logInGoogle = (): Promise<status> => {
 export const addProfile = async (form: any): Promise<status> => {
   // adds a new document with the name, profile picture, instagram handle,
   // community, room number, and description
-  const bytes = form.profilePicture
-    ? Bytes.fromUint8Array(
-        new Uint8Array(
-          await form.profilePicture.file.originFileObj.arrayBuffer()
-        )
-      )
-    : null;
+  const bytes = Bytes.fromUint8Array(new Uint8Array(await form.profilePicture.file.originFileObj.arrayBuffer()));
   try {
-    await setDoc(doc(db, "users/" + auth.currentUser!.uid), {
+    const res = await addDoc(collection(db, "users"), {
+      id: auth.currentUser!.uid,
       name: form.name,
       profilePicture: bytes,
       profilePictureType: form.profilePicture.file.type,
       instagramHandle: form.instagramHandle,
       community: form.community,
       roomNumber: form.roomNumber,
-      floorNumber: form.floorNumber,
       description: form.description,
     });
-    const docRef = doc(db, "communities/" + form.community + "/floors/" + form.floorNumber + "/rooms/" + form.roomNumber);
-    const docSnap = await getDoc(docRef);
-    if (!docSnap.exists()) {
-      await setDoc(docRef, {
-        requests: [],
-      });
-    }
+    console.log(res);
     return {
       success: true,
       message: "Profile has been created successfully!",
@@ -132,15 +119,4 @@ export const addProfile = async (form: any): Promise<status> => {
   }
 };
 
-export const userHasProfile = async (): Promise<boolean> => {
-  if (auth.currentUser == null) {
-    return false;
-  }
-  const docRef = doc(db, "users/" + auth.currentUser!.uid);
-  const docSnap = await getDoc(docRef);
-  if (docSnap.exists()) {
-    return true;
-  } else {
-    return false;
-  }
-};
+export const 
