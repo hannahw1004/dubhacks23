@@ -58,7 +58,11 @@ const CreateProfile: React.FC = () => {
       if (!isImage) {
         openNotification(false, `${file.name} is not supported`);
       }
-      return isImage || Upload.LIST_IGNORE;
+      const isGt1M = file.size / 1024 / 1024 > 1;
+      if (isGt1M) {
+        openNotification(false, `${file.name} is too large (max 1MB)`);
+      }
+      return !isImage || Upload.LIST_IGNORE || isGt1M;
     },
     onChange: (info) => {
       console.log(info.fileList);

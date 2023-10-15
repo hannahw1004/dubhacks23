@@ -120,6 +120,9 @@ export const addProfile = async (form: any): Promise<status> => {
 };
 
 export const userHasProfile = async (): Promise<boolean> => {
+  if (auth.currentUser == null) {
+    return false;
+  }
   const docRef = doc(db, "users/"+auth.currentUser!.uid);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
