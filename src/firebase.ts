@@ -136,7 +136,7 @@ export const addProfile = async (form: any): Promise<status> => {
     if (!docSnap.exists()) {
       await Promise.all([
         setDoc(docRef, {
-          requests: [],
+          request: null,
         }),
         setDoc(doc(db, "communities", form.community.toString()), {
           name: form.community.toString(),
@@ -189,10 +189,17 @@ export const getFloorsFromCommunity = async (
   return docs;
 };
 
-type Room = {
-  id: string;
-  data: any;
+export type Room = {
+  id: string,
+  request: Request,
 };
+
+export type Request = {
+  type: string,
+  description: string,
+  status: "pending" | "accepted";
+  user?: string,
+} | null;
 
 export const getRoomsFromFloor = async (
   community: string,
@@ -211,7 +218,7 @@ export const getRoomsFromFloor = async (
   querySnapshot.forEach((doc) => {
     docs.push({
       id: doc.id,
-      data: doc.data(),
+      request: doc.data().request,
     });
   });
   return docs;
@@ -233,7 +240,7 @@ export const logout = async (): Promise<void> => {
   await auth.signOut();
 }
 
-export const addRequest = async (form: any, community: string, floor: string, room: string): Promise<status> => {
+export const addRequest = async (form: any, community: string, floor: string, room: string, name: string): Promise<status> => {
  
   try {
 
@@ -248,12 +255,12 @@ export const addRequest = async (form: any, community: string, floor: string, ro
     );
 
     await updateDoc(docRef, {
-      requests: arrayUnion({
+      request: {
         type: form.type,
         description: form.description,
-      })
+        status: "pending",
+      }
     });
-
     
 
     return {
@@ -269,3 +276,53 @@ export const addRequest = async (form: any, community: string, floor: string, ro
     };
   }
 };
+
+export const getRequest = async (community: string, floor: string, room: string): Promise<Request|null> => {
+  const docRef = doc(
+    db,
+    "communities",
+    community,
+    "floors",
+    floor.toString(),
+    "rooms",
+    room.toString()
+  );
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    const data = docSnap.data();
+    console.log(data);
+    return data?.request;
+  } else {
+    return null;
+  }
+}
+
+export const confirmRequest = async (community: string, floor: string, room: string, user: string): Promise<status> => {
+  try {
+    const docRef = doc(
+      db,
+      "communities",
+      community,
+      "floors",
+      floor.toString(),
+      "rooms",
+      room.toString()
+    );
+    await updateDoc(docRef, {
+      request: {
+        status: "accepted",
+        user: user,
+      }
+    });
+    return {
+      success: true,
+      message: "Request has been confirmed successfully!",
+    };
+  } catch (e: any) {
+    console.log(e);
+    return {
+      success: false,
+      message: e.message,
+    };
+  }
+}
