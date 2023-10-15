@@ -159,7 +159,7 @@ export const LogIn: React.FC = () => {
                 verticalAlign: "middle",
               }}
             />
-            Register with Google
+            Log In With Google
           </Button>
         </Form.Item>
         <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
