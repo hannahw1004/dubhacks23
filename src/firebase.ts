@@ -1,5 +1,3 @@
-// Import the functions you need from the SDKs you need
-
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
@@ -103,22 +101,16 @@ export const logInGoogle = (): Promise<status> => {
 export const addProfile = async (form: any): Promise<status> => {
   // adds a new document with the name, profile picture, instagram handle,
   // community, room number, and description
-  const bytes = form.profilePicture
-    ? Bytes.fromUint8Array(
-        new Uint8Array(
-          await form.profilePicture.file.originFileObj.arrayBuffer()
-        )
-      )
-    : null;
+  const bytes = Bytes.fromUint8Array(new Uint8Array(await form.profilePicture.file.originFileObj.arrayBuffer()));
   try {
-    await setDoc(doc(db, "users/" + auth.currentUser!.uid), {
+    const res = await addDoc(collection(db, "users"), {
+      id: auth.currentUser!.uid,
       name: form.name,
       profilePicture: bytes,
       profilePictureType: form.profilePicture.file.type,
       instagramHandle: form.instagramHandle,
       community: form.community,
       roomNumber: form.roomNumber,
-      floorNumber: form.floorNumber,
       description: form.description,
     });
     const docRef = doc(
